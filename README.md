@@ -8,6 +8,14 @@ The syncing itself is done by the free, open-source [FreeFileSync](https://freef
 
 > SyncBar is an independent project and is not affiliated with FreeFileSync.
 
+## Download
+
+**[⬇ Download SyncBar for macOS](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)**
+
+macOS 15 or later · Apple silicon and Intel · Notarized by Apple · Free and open source
+
+All versions and release notes: [Releases](https://github.com/yuting-ai/SyncBar/releases)
+
 ## Features
 
 - **Status in the menu bar**: each task's last result (how many items, how much data) and its next scheduled run. The icon changes color when a sync fails, finishes with warnings, or a scheduled task hasn't synced for more than 2 days.
@@ -29,7 +37,7 @@ The syncing itself is done by the free, open-source [FreeFileSync](https://freef
 
 ## Installation
 
-1. Download `SyncBar-x.x.dmg`, open it, and drag SyncBar into the Applications folder.
+1. [Download SyncBar.dmg](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg), open it, and drag SyncBar into the Applications folder.
 2. Open SyncBar. It has no window and no Dock icon; it appears in the **menu bar** at the top right of the screen.
 3. The first time, a “Welcome to SyncBar” window guides you through two steps:
    1. **Install FreeFileSync**: click “Download FreeFileSync”. Once it's installed, SyncBar detects it automatically.
@@ -182,6 +190,13 @@ scripts/release.sh
 ```
 
 Add `--skip-notarize` to check signing and packaging without submitting for notarization.
+
+Publish it on GitHub. The DMG is uploaded as `SyncBar.dmg` so that the README's download link (`releases/latest/download/SyncBar.dmg`) always points to the newest version:
+
+```bash
+cp build/release/SyncBar-1.1.dmg build/release/SyncBar.dmg
+gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "…"
+```
 
 ## License
 

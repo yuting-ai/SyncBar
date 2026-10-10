@@ -8,6 +8,14 @@
 
 > SyncBar 是独立开发的工具，不是 FreeFileSync 的官方产品。
 
+## 下载
+
+**[⬇ 下载 SyncBar（macOS）](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)**
+
+macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公证 · 免费开源
+
+所有版本和更新说明：[Releases](https://github.com/yuting-ai/SyncBar/releases)
+
 ## 功能
 
 - **菜单栏状态**：每个任务上次同步的结果（复制了多少项、多大）、下次什么时候运行；出错、有警告或超过 2 天没同步时，图标会变色提醒。
@@ -29,7 +37,7 @@
 
 ## 安装
 
-1. 下载 `SyncBar-x.x.dmg`，双击打开，把 SyncBar 拖进「应用程序」文件夹。
+1. [下载 SyncBar.dmg](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)，双击打开，把 SyncBar 拖进「应用程序」文件夹。
 2. 打开 SyncBar。它没有窗口，也不在程序坞里，只会出现在屏幕右上角的**菜单栏**。
 3. 第一次打开时会弹出「欢迎使用 SyncBar」，按提示完成两步：
    1. **安装 FreeFileSync**：点「下载 FreeFileSync」，装好后回到 SyncBar，会自动识别。
@@ -182,6 +190,13 @@ scripts/release.sh
 ```
 
 只想检查签名和打包、不提交公证时，加 `--skip-notarize`。
+
+发布到 GitHub。DMG 统一以 `SyncBar.dmg` 的文件名上传，这样 README 里的下载链接（`releases/latest/download/SyncBar.dmg`）始终指向最新版本：
+
+```bash
+cp build/release/SyncBar-1.1.dmg build/release/SyncBar.dmg
+gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "…"
+```
 
 ## 许可
 

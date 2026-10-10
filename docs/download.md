@@ -4,7 +4,7 @@
 
 SyncBar 住在 Mac 的菜单栏里。选好要备份的文件夹和备份到哪里，再设个时间，它就会每天（或每周）在后台自动同步，不用开着任何软件。
 
-[⬇ 下载 SyncBar 1.0（740 KB）](下载链接)
+[⬇ 下载 SyncBar 1.0（740 KB）](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)
 
 macOS 15 或更高版本 · Apple 芯片和 Intel Mac 均可 · 中文 / English · 免费
 
