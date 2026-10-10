@@ -43,7 +43,9 @@ final class SyncStore {
 
     func isRunning(_ task: SyncTask) -> Bool { pending[task.label] != nil }
 
+    /// Only scheduled tasks can fall behind; manual ones run when the user says so.
     func isStale(_ task: SyncTask) -> Bool {
+        guard task.schedule.kind != .manual else { return false }
         guard let log = logs[task.name] else { return true }
         return now.timeIntervalSince(log.date) > Self.staleAfter
     }
@@ -57,8 +59,9 @@ final class SyncStore {
         tasks = TaskLoader.loadTasks(now: now)
         var latest = LogReader.latestLogs(for: tasks.map(\.name))
         for (name, log) in latest {
-            if summaries[log.url] == nil { summaries[log.url] = LogReader.summary(of: log.url) ?? "" }
-            latest[name]?.summary = summaries[log.url].flatMap { $0.isEmpty ? nil : $0 }
+            // Only cache successes: a log that was still being written is retried next time.
+            if summaries[log.url] == nil { summaries[log.url] = LogReader.summary(of: log.url) }
+            latest[name]?.summary = summaries[log.url]
         }
         logs = latest
 
@@ -71,17 +74,115 @@ final class SyncStore {
         }
     }
 
+    /// Runs the job right away. A missing target folder is created first: when the user starts a run
+    /// themselves that's expected, so FreeFileSync shouldn't flag it. Scheduled runs still warn, since a
+    /// backup folder vanishing unattended is worth knowing about.
     func runNow(_ task: SyncTask) {
         guard !isRunning(task), !task.isVolumeMissing else { return }
-        let process = Process()
-        process.executableURL = URL(filePath: "/bin/launchctl")
-        process.arguments = ["kickstart", "gui/\(getuid())/\(task.label)"]
-        do {
-            try process.run()
+        try? Self.createFolderIfMissing(task.targetPath)
+        if launchctl("kickstart", "gui/\(getuid())/\(task.label)") == 0 {
             pending[task.label] = .now
             lastError = nil
+        } else {
+            lastError = "无法启动 \(task.name)"
+        }
+    }
+
+    // MARK: Editing
+
+    /// The task being edited in the editor window.
+    var draft = TaskDraft()
+
+    func beginNewTask() {
+        draft = TaskDraft()
+    }
+
+    func beginEditing(_ task: SyncTask) {
+        draft = task.draft
+    }
+
+    func validationError() -> String? {
+        draft.validationError(existingBatchURLs: tasks.map(\.batchURL))
+    }
+
+    /// Writes the batch job and launch agent for `draft`, then (re)loads the agent.
+    /// Returns the saved task's label.
+    @discardableResult
+    func saveDraft() throws -> String {
+        let draft = self.draft
+        let label = draft.label ?? LaunchAgent.newLabel()
+        let fm = FileManager.default
+        try fm.createDirectory(at: Paths.jobs, withIntermediateDirectories: true)
+
+        // Create the destination up front so FreeFileSync doesn't warn about a missing folder.
+        try Self.createFolderIfMissing(draft.effectiveTarget)
+
+        var batch = try draft.originalBatchURL.map(BatchFile.init(url:)) ?? BatchFile()
+        batch.apply(draft, isNew: draft.isNew)
+        try batch.write(to: draft.batchURL)
+        // Renamed: drop the old file (to the Trash, so it can be recovered).
+        if let old = draft.originalBatchURL, old.standardizedFileURL != draft.batchURL.standardizedFileURL {
+            try? fm.trashItem(at: old, resultingItemURL: nil)
+        }
+
+        let agentURL = LaunchAgent.url(for: label)
+        try LaunchAgent.write(LaunchAgent.plist(label: label, batchURL: draft.batchURL, draft: draft), to: agentURL)
+        try reload(label: label, agentURL: agentURL)
+
+        self.draft.label = label
+        self.draft.originalBatchURL = draft.batchURL
+        refresh()
+        return label
+    }
+
+    /// Unloads the task and moves its launch agent and batch job to the Trash.
+    func delete(_ task: SyncTask) {
+        let fm = FileManager.default
+        launchctl("bootout", "gui/\(getuid())/\(task.label)")
+        try? fm.trashItem(at: LaunchAgent.url(for: task.label), resultingItemURL: nil)
+        try? fm.trashItem(at: task.batchURL, resultingItemURL: nil)
+        pending[task.label] = nil
+        refresh()
+    }
+
+    func runNow(label: String) {
+        if let task = tasks.first(where: { $0.label == label }) { runNow(task) }
+    }
+
+    /// Creates `path` when only its last component is missing. Deeper gaps (e.g. an unplugged
+    /// drive's mount point) are left alone so nothing gets written onto the internal disk.
+    private static func createFolderIfMissing(_ path: String) throws {
+        let fm = FileManager.default
+        let url = URL(filePath: path)
+        guard !path.isEmpty, !fm.fileExists(atPath: path),
+              fm.fileExists(atPath: url.deletingLastPathComponent().folderPath) else { return }
+        try fm.createDirectory(at: url, withIntermediateDirectories: false)
+    }
+
+    private func reload(label: String, agentURL: URL) throws {
+        let domain = "gui/\(getuid())"
+        launchctl("bootout", "\(domain)/\(label)")
+        // bootout finishes asynchronously; bootstrap fails with EIO until it has.
+        for _ in 0..<20 {
+            if launchctl("bootstrap", domain, agentURL.path(percentEncoded: false)) == 0 { return }
+            Thread.sleep(forTimeInterval: 0.15)
+        }
+        throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: "无法加载定时任务 \(label)"])
+    }
+
+    @discardableResult
+    private func launchctl(_ args: String...) -> Int32 {
+        let process = Process()
+        process.executableURL = URL(filePath: "/bin/launchctl")
+        process.arguments = args
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
+        do {
+            try process.run()
+            process.waitUntilExit()
+            return process.terminationStatus
         } catch {
-            lastError = "无法启动 \(task.name)：\(error.localizedDescription)"
+            return -1
         }
     }
 

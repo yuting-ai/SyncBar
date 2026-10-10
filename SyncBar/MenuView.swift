@@ -2,6 +2,12 @@ import SwiftUI
 
 struct MenuView: View {
     let store: SyncStore
+    @Environment(\.openWindow) private var openWindow
+
+    private func openEditor() {
+        openWindow(id: SyncBarApp.editorID)
+        NSApp.activate()
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -13,14 +19,17 @@ struct MenuView: View {
             Divider()
 
             if store.tasks.isEmpty {
-                Text("没有找到 FreeFileSync 定时任务")
+                Text("还没有同步任务，点右上角 ＋ 新建一个")
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
                     .padding(24)
             } else {
                 VStack(spacing: 2) {
                     ForEach(store.tasks) { task in
-                        TaskRow(task: task, store: store)
+                        TaskRow(task: task, store: store) {
+                            store.beginEditing(task)
+                            openEditor()
+                        }
                     }
                 }
                 .padding(6)
@@ -60,9 +69,16 @@ struct MenuView: View {
             } label: {
                 Image(systemName: "arrow.clockwise")
             }
-            .buttonStyle(.borderless)
             .help("刷新")
+            Button {
+                store.beginNewTask()
+                openEditor()
+            } label: {
+                Image(systemName: "plus")
+            }
+            .help("新建同步任务")
         }
+        .buttonStyle(.borderless)
     }
 
     private var footer: some View {
@@ -104,6 +120,7 @@ struct MenuView: View {
 private struct TaskRow: View {
     let task: SyncTask
     let store: SyncStore
+    let onEdit: () -> Void
     @State private var hovering = false
 
     private var log: SyncLog? { store.logs[task.name] }
@@ -176,7 +193,11 @@ private struct TaskRow: View {
                 .font(.caption)
                 .foregroundStyle(.orange)
         } else if let next = task.nextRun(after: store.now) {
-            Text("下次 " + DateText.describe(next, now: store.now))
+            Text("下次 " + DateText.describe(next, now: store.now) + (task.schedule.kind == .weekly ? "（每周）" : ""))
+                .font(.caption)
+                .foregroundStyle(.tertiary)
+        } else {
+            Text("仅手动同步")
                 .font(.caption)
                 .foregroundStyle(.tertiary)
         }
@@ -184,12 +205,10 @@ private struct TaskRow: View {
 
     private var actions: some View {
         HStack(spacing: 2) {
-            Button {
-                store.edit(task)
-            } label: {
+            Button(action: onEdit) {
                 Image(systemName: "slider.horizontal.3")
             }
-            .help("在 FreeFileSync 中编辑")
+            .help("编辑任务")
 
             Button {
                 store.runNow(task)
