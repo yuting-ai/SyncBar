@@ -53,8 +53,14 @@ struct SetupView: View {
     private var installStep: some View {
         Step(number: 1, title: "安装 FreeFileSync", state: store.freeFileSyncInstalled ? .done : .todo) {
             if store.freeFileSyncInstalled {
-                Text("已安装" + (FreeFileSync.version.map { " FreeFileSync \($0)" } ?? ""))
-                    .foregroundStyle(.secondary)
+                Group {
+                    if let version = FreeFileSync.version {
+                        Text("已安装 FreeFileSync \(version)")
+                    } else {
+                        Text("已安装")
+                    }
+                }
+                .foregroundStyle(.secondary)
             } else {
                 Text("FreeFileSync 是免费开源的同步工具，SyncBar 用它来执行同步。下载后打开安装包，按提示安装即可。")
                     .foregroundStyle(.secondary)
@@ -125,11 +131,11 @@ private struct Step: View {
     enum State { case todo, done, failed, optional }
 
     let number: Int
-    let title: String
+    let title: LocalizedStringKey
     let state: State
     let content: AnyView
 
-    init(number: Int, title: String, state: State, @ViewBuilder content: () -> some View) {
+    init(number: Int, title: LocalizedStringKey, state: State, @ViewBuilder content: () -> some View) {
         self.number = number
         self.title = title
         self.state = state

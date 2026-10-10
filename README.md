@@ -18,6 +18,7 @@
 - **立即同步**：随时手动同步一次。
 - **移动硬盘感知**：硬盘没插时跳过本次同步并发通知，不会把文件写到电脑内置硬盘上。
 - **首次启动引导**：检查 FreeFileSync 是否已安装、是否有「完全磁盘访问权限」，一步步带你完成设置。
+- **中文和英文界面**：自动跟随系统语言。
 
 ## 系统要求
 
@@ -138,6 +139,18 @@ SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # 引导�
 ```
 
 设置环境变量 `SYNCBAR_LOGS=<文件夹>` 可以让 SyncBar 读取另一个日志文件夹，用假日志预览出错、警告等状态。
+
+### 本地化
+
+界面文字的基准语言是简体中文，英文翻译在 `SyncBar/Localizable.xcstrings`（String Catalog）里，Xcode 编译时会自动提取代码里新增的文字。检查是否还有没翻译的：
+
+```bash
+xcodebuild -exportLocalizations -project SyncBar.xcodeproj -localizationPath /tmp/loc -exportLanguage en
+```
+
+用指定语言渲染界面：`SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`。
+
+SyncBar 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync 会用它自己的界面语言写日志），而是看日志里结果图标的文件名、数字和错误码，所以无论 FreeFileSync 设置成什么语言都能正确判断。
 
 ### 图标
 

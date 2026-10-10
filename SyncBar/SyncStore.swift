@@ -27,8 +27,7 @@ final class SyncStore {
     private(set) var launchAtLogin = SMAppService.mainApp.status == .enabled
     private(set) var lastError: String?
 
-    private var summaries: [URL: String] = [:]
-    private var permissionErrors: [URL: Bool] = [:]
+    private var logDetails: [URL: LogReader.Details] = [:]
     private var timer: Timer?
     private var watcher: DispatchSourceFileSystemObject?
 
@@ -60,9 +59,13 @@ final class SyncStore {
         tasks = TaskLoader.loadTasks(now: now)
         var latest = LogReader.latestLogs(for: tasks.map(\.name))
         for (name, log) in latest {
-            // Only cache successes: a log that was still being written is retried next time.
-            if summaries[log.url] == nil { summaries[log.url] = LogReader.summary(of: log.url) }
-            latest[name]?.summary = summaries[log.url]
+            // Only cache logs that were complete: one still being written is read again next time.
+            if logDetails[log.url] == nil, let details = LogReader.details(of: log.url), details.result != nil {
+                logDetails[log.url] = details
+            }
+            guard let details = logDetails[log.url] else { continue }
+            latest[name]?.summary = LogReader.summary(details)
+            if let result = details.result { latest[name]?.result = result }
         }
         logs = latest
         freeFileSyncInstalled = FreeFileSync.appURL != nil
@@ -87,7 +90,7 @@ final class SyncStore {
             pending[task.label] = .now
             lastError = nil
         } else {
-            lastError = "无法启动 \(task.name)"
+            lastError = String(localized: "无法启动 \(task.name)")
         }
     }
 
@@ -134,8 +137,7 @@ final class SyncStore {
         guard permission == .granted,
               let verifiedAt = UserDefaults.standard.object(forKey: Self.verifiedAtKey) as? Date else { return }
         for log in logs.values where log.result != .success && log.date > verifiedAt {
-            if permissionErrors[log.url] == nil { permissionErrors[log.url] = LogReader.mentionsPermissionDenied(log.url) }
-            if permissionErrors[log.url] == true {
+            if logDetails[log.url]?.permissionDenied == true {
                 permission = .denied
                 UserDefaults.standard.removeObject(forKey: Self.verifiedAtKey)
                 return
@@ -222,7 +224,7 @@ final class SyncStore {
             if launchctl("bootstrap", domain, agentURL.path(percentEncoded: false)) == 0 { return }
             Thread.sleep(forTimeInterval: 0.15)
         }
-        throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: "无法加载定时任务 \(label)"])
+        throw CocoaError(.fileWriteUnknown, userInfo: [NSLocalizedDescriptionKey: String(localized: "无法加载定时任务 \(label)")])
     }
 
     @discardableResult
@@ -269,7 +271,7 @@ final class SyncStore {
             if enabled { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
             lastError = nil
         } catch {
-            lastError = "无法更改登录项：\(error.localizedDescription)"
+            lastError = String(localized: "无法更改登录项：\(error.localizedDescription)")
         }
         launchAtLogin = SMAppService.mainApp.status == .enabled
     }

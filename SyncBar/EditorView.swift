@@ -14,10 +14,10 @@ struct EditorView: View {
             Form {
                 Section {
                     TextField("名称", text: $store.draft.name, prompt: Text("例如：论文-移动硬盘"))
-                    FolderField(title: "源文件夹", path: $store.draft.source, canCreate: false) { picked in
+                    FolderField(title: String(localized: "源文件夹"), path: $store.draft.source, canCreate: false) { picked in
                         if store.draft.name.isEmpty { store.draft.name = picked.lastPathComponent }
                     }
-                    FolderField(title: "目标文件夹", path: $store.draft.target, canCreate: true)
+                    FolderField(title: String(localized: "目标文件夹"), path: $store.draft.target, canCreate: true)
                     if !draft.source.isEmpty {
                         Toggle("在目标里新建「\(draft.sourceFolderName)」文件夹", isOn: $store.draft.createSubfolder)
                     }
@@ -72,7 +72,8 @@ struct EditorView: View {
         }
         .frame(width: 500)
         .fixedSize(horizontal: false, vertical: true)
-        .navigationTitle(draft.isNew ? "新建同步任务" : "编辑：\(existingTask?.name ?? draft.name)")
+        .navigationTitle(draft.isNew ? String(localized: "新建同步任务")
+                                     : String(localized: "编辑：\(existingTask?.name ?? draft.name)"))
         .confirmationDialog("删除任务「\(draft.name)」？", isPresented: $confirmingDelete) {
             Button("删除任务", role: .destructive) {
                 if let existingTask { store.delete(existingTask) }
@@ -164,7 +165,7 @@ struct EditorView: View {
             if runAfter { store.runNow(label: label) }
             dismissWindow(id: SyncBarApp.editorID)
         } catch {
-            saveError = "保存失败：\(error.localizedDescription)"
+            saveError = String(localized: "保存失败：\(error.localizedDescription)")
         }
     }
 }
@@ -204,8 +205,8 @@ private struct FolderField: View {
         panel.canChooseFiles = false
         panel.canCreateDirectories = canCreate
         panel.allowsMultipleSelection = false
-        panel.prompt = "选择"
-        panel.message = "选择\(title)"
+        panel.prompt = String(localized: "选择")
+        panel.message = String(localized: "选择\(title)")
         if !path.isEmpty { panel.directoryURL = URL(filePath: path) }
         NSApp.activate()
         guard panel.runModal() == .OK, let url = panel.url else { return }
@@ -217,7 +218,9 @@ private struct FolderField: View {
 /// Monday-first day toggles; values use launchd numbering (1 = Monday … 7 = Sunday).
 private struct WeekdayPicker: View {
     @Binding var days: Set<Int>
-    private let names = ["一", "二", "三", "四", "五", "六", "日"]
+    /// Monday first, in the user's language (symbols start at Sunday).
+    private let names = Array(Calendar.current.shortStandaloneWeekdaySymbols.dropFirst())
+        + [Calendar.current.shortStandaloneWeekdaySymbols[0]]
 
     var body: some View {
         LabeledContent("星期") {

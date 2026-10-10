@@ -52,7 +52,8 @@ struct SyncLog: Equatable {
 
     let url: URL
     let date: Date
-    let result: Result
+    /// From the file name; replaced by the log's own result icon once it has been read.
+    var result: Result
     /// e.g. "75 项 · 1.64 GB", nil when the log could not be summarised.
     var summary: String?
 }
@@ -111,8 +112,9 @@ enum TaskLoader {
     static func shorten(_ path: String) -> String {
         let home = Paths.home.path(percentEncoded: false)
         var p = path
+        let desktop = FileManager.default.displayName(atPath: home + "Desktop")
         for (prefix, replacement) in [(home + "Library/CloudStorage/", ""), ("/Volumes/", ""),
-                                      (home + "Desktop/", "桌面/"), (home, "~/")] where p.hasPrefix(prefix) {
+                                      (home + "Desktop/", desktop + "/"), (home, "~/")] where p.hasPrefix(prefix) {
             p = replacement + p.dropFirst(prefix.count)
             break
         }
@@ -156,25 +158,66 @@ enum LogReader {
         return result
     }
 
-    /// Pulls "Elements processed: 75 (1.64 GB)" out of a FreeFileSync HTML log.
-    static func summary(of url: URL) -> String? {
-        guard let text = head(of: url) else { return nil }
-        guard let m = text.firstMatch(of: /Elements processed:\s*([\d,]+)\s*\(([^)]+)\)/) else { return nil }
-        let count = m.1.replacing(",", with: "")
-        return count == "0" ? "无变化" : "\(count) 项 · \(m.2)"
+    /// What a log says, read from its HTML structure rather than its wording: FreeFileSync writes
+    /// logs in its own UI language, but the icon file names and the numbers are the same in all of them.
+    struct Details {
+        var result: SyncLog.Result?
+        var processedCount: Int?
+        /// e.g. "1.64 GB"; unit names may be in FreeFileSync's language.
+        var processedSize: String?
+        /// Messages next to an error icon in the log's message list.
+        var errors: [String]
+
+        var permissionDenied: Bool { errors.contains { $0.contains("EPERM") } }
     }
 
-    /// Whether the run hit macOS privacy protection, i.e. FreeFileSync lacks Full Disk Access.
-    static func mentionsPermissionDenied(_ url: URL) -> Bool {
-        guard let text = head(of: url) else { return false }
-        return text.contains("EPERM") || text.contains("Operation not permitted")
-    }
-
-    /// The text of the log's first 16 KB, where the summary and errors sit; big runs' logs can be several MB.
-    private static func head(of url: URL) -> String? {
+    /// Reads the first 16 KB of a log, where the summary and the errors and warnings sit
+    /// (logs of big runs can be several MB).
+    static func details(of url: URL) -> Details? {
         guard let handle = try? FileHandle(forReadingFrom: url) else { return nil }
         defer { try? handle.close() }
-        guard let data = try? handle.read(upToCount: 16_384) else { return nil }
-        return String(decoding: data, as: UTF8.self).replacing(/<[^>]+>/, with: " ")
+        guard let data = try? handle.read(upToCount: 16_384), !data.isEmpty else { return nil }
+        return details(html: String(decoding: data, as: UTF8.self))
+    }
+
+    static func details(html: String) -> Details {
+        var details = Details(errors: [])
+        if html.contains("images/log/result-error") || html.contains("images/log/result-cancel") {
+            details.result = .error
+        } else if html.contains("images/log/result-warning") {
+            details.result = .warning
+        } else if html.contains("images/log/result-succes") {
+            details.result = .success
+        }
+
+        // Summary row: <img …file.png …></td> <td><span …>75</span> (1.64 GB)</td>
+        if let cell = html.firstMatch(of: /images\/log\/file\.png"[^>]*><\/td>\s*<td>(.*?)<\/td>/.dotMatchesNewlines()) {
+            let text = plainText(String(cell.1))
+            let count = text.prefix { $0 != "(" }.filter(\.isNumber)
+            details.processedCount = Int(count)
+            if let size = text.firstMatch(of: /\(([^)]*)\)/) { details.processedSize = String(size.1) }
+        }
+
+        // Message rows use 16-pixel icons; the summary table's are 24 pixels. Errors are listed once in
+        // the "errors and warnings" section and again in the full log, so keep each message once.
+        for row in html.matches(of: /images\/log\/msg-error\.png" width="16"[^>]*><\/td>\s*<td>(.*?)<\/td>/.dotMatchesNewlines()) {
+            let message = plainText(String(row.1))
+            if !details.errors.contains(message) { details.errors.append(message) }
+        }
+        return details
+    }
+
+    /// e.g. "75 项 · 1.64 GB", or "无变化" when nothing was copied.
+    static func summary(_ details: Details) -> String? {
+        guard let count = details.processedCount else { return nil }
+        if count == 0 { return String(localized: "无变化") }
+        return [String(localized: "\(count) 项"), details.processedSize].compactMap { $0 }.joined(separator: " · ")
+    }
+
+    private static func plainText(_ html: String) -> String {
+        html.replacing(/<[^>]+>/, with: " ")
+            .replacing("&quot;", with: "\"").replacing("&amp;", with: "&").replacing("&nbsp;", with: " ")
+            .replacing("&lt;", with: "<").replacing("&gt;", with: ">")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

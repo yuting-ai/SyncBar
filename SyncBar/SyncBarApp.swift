@@ -58,7 +58,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let args = CommandLine.arguments
         if let i = args.firstIndex(of: "--snapshot"), i + 1 < args.count {
             MainActor.assumeIsolated {
-                Snapshot.render(to: URL(filePath: args[i + 1]), editing: i + 2 < args.count ? args[i + 2] : nil)
+                // A following "-AppleLanguages (en)" style option is not a view name.
+                let view = i + 2 < args.count && !args[i + 2].hasPrefix("-") ? args[i + 2] : nil
+                Snapshot.render(to: URL(filePath: args[i + 1]), editing: view)
             }
             exit(0)
         }

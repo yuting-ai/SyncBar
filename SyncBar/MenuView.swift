@@ -103,11 +103,11 @@ struct MenuView: View {
     }
 
     private var setupProblem: String {
-        if !store.freeFileSyncInstalled { return "还没有安装 FreeFileSync，无法同步" }
+        if !store.freeFileSyncInstalled { return String(localized: "还没有安装 FreeFileSync，无法同步") }
         switch store.permission {
-        case .checking: return "正在检查 FreeFileSync 的权限…"
-        case .denied: return "FreeFileSync 没有完全磁盘访问权限"
-        case .unknown, .granted: return "还没确认 FreeFileSync 的权限"
+        case .checking: return String(localized: "正在检查 FreeFileSync 的权限…")
+        case .denied: return String(localized: "FreeFileSync 没有完全磁盘访问权限")
+        case .unknown, .granted: return String(localized: "还没确认 FreeFileSync 的权限")
         }
     }
 
@@ -137,12 +137,12 @@ struct MenuView: View {
     private var overallText: String {
         switch store.overall {
         case .syncing:
-            return "正在同步…"
+            return String(localized: "正在同步…")
         case .attention:
             let count = store.tasks.filter(store.needsAttention).count
-            return "\(count) 个任务需要注意"
+            return String(localized: "\(count) 个任务需要注意")
         case .ok:
-            return "\(store.tasks.count) 个任务，全部正常"
+            return String(localized: "\(store.tasks.count) 个任务，全部正常")
         }
     }
 }
@@ -201,7 +201,7 @@ private struct TaskRow: View {
         if store.isRunning(task) {
             Text("正在同步…").font(.caption).foregroundStyle(Color.accentColor)
         } else if let log {
-            let parts = ["上次 " + DateText.describe(log.date, now: store.now), resultText(log)]
+            let parts = [String(localized: "上次 \(DateText.describe(log.date, now: store.now))"), resultText(log)]
             Button {
                 store.openLog(task)
             } label: {
@@ -223,7 +223,8 @@ private struct TaskRow: View {
                 .font(.caption)
                 .foregroundStyle(.orange)
         } else if let next = task.nextRun(after: store.now) {
-            Text("下次 " + DateText.describe(next, now: store.now) + (task.schedule.kind == .weekly ? "（每周）" : ""))
+            let when = DateText.describe(next, now: store.now)
+            Text(task.schedule.kind == .weekly ? String(localized: "下次 \(when)（每周）") : String(localized: "下次 \(when)"))
                 .font(.caption)
                 .foregroundStyle(.tertiary)
         } else {
@@ -246,7 +247,7 @@ private struct TaskRow: View {
                 Image(systemName: "play.fill")
             }
             .disabled(store.isRunning(task) || task.isVolumeMissing || !store.freeFileSyncInstalled)
-            .help(task.isVolumeMissing ? "移动硬盘未连接" : "立即同步")
+            .help(task.isVolumeMissing ? String(localized: "移动硬盘未连接") : String(localized: "立即同步"))
         }
         .buttonStyle(.borderless)
         .opacity(hovering || store.isRunning(task) ? 1 : 0.55)
@@ -255,12 +256,12 @@ private struct TaskRow: View {
     private func resultText(_ log: SyncLog) -> String? {
         if store.isStale(task) {
             let days = Int(store.now.timeIntervalSince(log.date) / 86_400)
-            return "已 \(days) 天未同步"
+            return String(localized: "已 \(days) 天未同步")
         }
         switch log.result {
         case .success: return log.summary
-        case .warning: return "有警告" + (log.summary.map { "（\($0)）" } ?? "")
-        case .error: return "有错误，点此查看"
+        case .warning: return log.summary.map { String(localized: "有警告（\($0)）") } ?? String(localized: "有警告")
+        case .error: return String(localized: "有错误，点此查看")
         }
     }
 
@@ -269,25 +270,31 @@ private struct TaskRow: View {
     }
 }
 
+/// "今天 09:42" / "Today 9:42 AM", in the user's language and clock format.
 enum DateText {
     private static let time: DateFormatter = {
         let f = DateFormatter()
-        f.dateFormat = "HH:mm"
+        f.dateStyle = .none
+        f.timeStyle = .short
         return f
     }()
 
     private static let dayAndTime: DateFormatter = {
         let f = DateFormatter()
-        f.dateFormat = "M月d日 HH:mm"
+        f.setLocalizedDateFormatFromTemplate("MMMdjmm")
         return f
     }()
 
     static func describe(_ date: Date, now: Date) -> String {
         let cal = Calendar.current
         let hm = time.string(from: date)
-        if cal.isDate(date, inSameDayAs: now) { return "今天 " + hm }
-        if let y = cal.date(byAdding: .day, value: -1, to: now), cal.isDate(date, inSameDayAs: y) { return "昨天 " + hm }
-        if let t = cal.date(byAdding: .day, value: 1, to: now), cal.isDate(date, inSameDayAs: t) { return "明天 " + hm }
+        if cal.isDate(date, inSameDayAs: now) { return String(localized: "今天 \(hm)") }
+        if let y = cal.date(byAdding: .day, value: -1, to: now), cal.isDate(date, inSameDayAs: y) {
+            return String(localized: "昨天 \(hm)")
+        }
+        if let t = cal.date(byAdding: .day, value: 1, to: now), cal.isDate(date, inSameDayAs: t) {
+            return String(localized: "明天 \(hm)")
+        }
         return dayAndTime.string(from: date)
     }
 }

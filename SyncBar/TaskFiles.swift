@@ -110,21 +110,21 @@ struct TaskDraft: Equatable {
     /// A message describing what still needs fixing, or nil when the draft can be saved.
     func validationError(existingBatchURLs: [URL]) -> String? {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
-        if trimmed.isEmpty { return "请填写任务名称" }
-        if trimmed.rangeOfCharacter(from: Self.forbiddenNameCharacters) != nil { return "任务名称不能包含 / : \\" }
-        if source.isEmpty { return "请选择源文件夹" }
-        if target.isEmpty { return "请选择目标文件夹" }
+        if trimmed.isEmpty { return String(localized: "请填写任务名称") }
+        if trimmed.rangeOfCharacter(from: Self.forbiddenNameCharacters) != nil { return String(localized: "任务名称不能包含 / : \\") }
+        if source.isEmpty { return String(localized: "请选择源文件夹") }
+        if target.isEmpty { return String(localized: "请选择目标文件夹") }
         let s = URL(filePath: source).standardizedFileURL.path(percentEncoded: false)
         let t = URL(filePath: effectiveTarget).standardizedFileURL.path(percentEncoded: false)
-        if s == t { return "源文件夹和目标文件夹不能相同" }
-        if t.hasPrefix(s.hasSuffix("/") ? s : s + "/") { return "目标文件夹不能放在源文件夹里面" }
-        if s.hasPrefix(t.hasSuffix("/") ? t : t + "/") { return "源文件夹不能放在目标文件夹里面" }
-        if schedule.kind == .weekly && schedule.weekdays.isEmpty { return "请至少选择一天" }
+        if s == t { return String(localized: "源文件夹和目标文件夹不能相同") }
+        if t.hasPrefix(s.hasSuffix("/") ? s : s + "/") { return String(localized: "目标文件夹不能放在源文件夹里面") }
+        if s.hasPrefix(t.hasSuffix("/") ? t : t + "/") { return String(localized: "源文件夹不能放在目标文件夹里面") }
+        if schedule.kind == .weekly && schedule.weekdays.isEmpty { return String(localized: "请至少选择一天") }
         let clash = existingBatchURLs.contains {
             $0.path.precomposedStringWithCanonicalMapping == batchURL.path.precomposedStringWithCanonicalMapping
                 && $0 != originalBatchURL
         }
-        if clash { return "已经有同名的任务了" }
+        if clash { return String(localized: "已经有同名的任务了") }
         return nil
     }
 }
@@ -311,7 +311,12 @@ struct BatchFile {
 
 /// The launch agent that runs a batch job, skipping with a notification when its drive is unplugged.
 enum LaunchAgent {
-    static let script = #"if [ -n "$1" ] && [ ! -d "$1" ]; then /usr/bin/osascript -e "display notification \"移动硬盘未连接，本次同步已跳过\" with title \"FreeFileSync: $(basename "$2" .ffs_batch)\""; exit 0; fi; exec /usr/bin/open -g -b org.freefilesync.FreeFileSync "$2""#
+    /// Written into each launch agent, so the notification is in the language SyncBar had when saving.
+    static var script: String {
+        let message = String(localized: "移动硬盘未连接，本次同步已跳过")
+            .replacing("\"", with: "").replacing("\\", with: "")
+        return #"if [ -n "$1" ] && [ ! -d "$1" ]; then /usr/bin/osascript -e "display notification \"\#(message)\" with title \"FreeFileSync: $(basename "$2" .ffs_batch)\""; exit 0; fi; exec /usr/bin/open -g -b org.freefilesync.FreeFileSync "$2""#
+    }
 
     static func newLabel() -> String {
         Paths.labelPrefix + "task-" + UUID().uuidString.prefix(8).lowercased()

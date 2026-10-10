@@ -1,0 +1,1183 @@
+{
+  "sourceLanguage": "zh-Hans",
+  "strings": {
+    "%@  →  %@": {
+      "shouldTranslate": false
+    },
+    "%@ 未连接，到时会跳过": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ not connected, will be skipped"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld 个任务需要注意": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld task needs attention"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld tasks need attention"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld 个任务，全部正常": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld task, all good"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld tasks, all good"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld 项": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld item"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld items"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "1. 点「打开系统设置」": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. Click “Open System Settings”"
+          }
+        }
+      }
+    },
+    "2. 点列表下方的 ＋，在「应用程序」里选择 FreeFileSync": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2. Click ＋ below the list and choose FreeFileSync in Applications"
+          }
+        }
+      }
+    },
+    "3. 打开 FreeFileSync 旁边的开关，然后回到这里": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3. Turn on the switch next to FreeFileSync, then come back here"
+          }
+        }
+      }
+    },
+    "FreeFileSync": {
+      "shouldTranslate": false
+    },
+    "FreeFileSync 是免费开源的同步工具，SyncBar 用它来执行同步。下载后打开安装包，按提示安装即可。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync is a free, open-source sync tool that SyncBar uses to do the syncing. Download it, open the installer and follow the steps."
+          }
+        }
+      }
+    },
+    "FreeFileSync 没有完全磁盘访问权限": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync doesn’t have Full Disk Access"
+          }
+        }
+      }
+    },
+    "SyncBar 借助 FreeFileSync 在后台同步文件。开始之前，先完成下面两步。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SyncBar syncs your folders in the background using FreeFileSync. Before you start, complete the two steps below."
+          }
+        }
+      }
+    },
+    "上次 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last: %@"
+          }
+        }
+      }
+    },
+    "下次 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next: %@"
+          }
+        }
+      }
+    },
+    "下次 %@（每周）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next: %@ (weekly)"
+          }
+        }
+      }
+    },
+    "下载 FreeFileSync": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Download FreeFileSync"
+          }
+        }
+      }
+    },
+    "什么时候同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When to Sync"
+          }
+        }
+      }
+    },
+    "仅手动": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manually"
+          }
+        }
+      }
+    },
+    "仅手动同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manual sync only"
+          }
+        }
+      }
+    },
+    "今天 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today %@"
+          }
+        }
+      }
+    },
+    "任务名称不能包含 / : \\": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The name can’t contain / : \\"
+          }
+        }
+      }
+    },
+    "但保留 .git 文件夹（Git 仓库的历史记录）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "But keep .git folders (Git repository history)"
+          }
+        }
+      }
+    },
+    "例如：论文-移动硬盘": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. Thesis to SSD"
+          }
+        }
+      }
+    },
+    "保存": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "保存失败：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t save: %@"
+          }
+        }
+      }
+    },
+    "保存并同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save and Sync"
+          }
+        }
+      }
+    },
+    "允许 FreeFileSync 访问所有文件": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow FreeFileSync to access all files"
+          }
+        }
+      }
+    },
+    "删除…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete…"
+          }
+        }
+      }
+    },
+    "删除任务": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Task"
+          }
+        }
+      }
+    },
+    "删除任务「%@」？": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the task “%@”?"
+          }
+        }
+      }
+    },
+    "刷新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh"
+          }
+        }
+      }
+    },
+    "去设置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set Up"
+          }
+        }
+      }
+    },
+    "取消": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "只删除这个同步任务和它的定时设置（会移到废纸篓），已经同步过去的文件不受影响。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only the task and its schedule are deleted (moved to the Trash). Files that were already synced stay where they are."
+          }
+        }
+      }
+    },
+    "只在你点菜单栏里的 ▶ 时同步一次。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncs once each time you click ▶ in the menu bar."
+          }
+        }
+      }
+    },
+    "同步任务": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Task"
+          }
+        }
+      }
+    },
+    "同步到：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncs to: %@"
+          }
+        }
+      }
+    },
+    "同步方式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Method"
+          }
+        }
+      }
+    },
+    "名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "在 FreeFileSync 中打开这个任务的全部设置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open all of this task’s settings in FreeFileSync"
+          }
+        }
+      }
+    },
+    "在目标里新建「%@」文件夹": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a “%@” folder in the destination"
+          }
+        }
+      }
+    },
+    "安装 FreeFileSync": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install FreeFileSync"
+          }
+        }
+      }
+    },
+    "定时同步在后台运行，没人能点「允许」，所以要提前授权，FreeFileSync 才能读取桌面、文稿和移动硬盘。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scheduled syncs run in the background where nobody can click “Allow”, so FreeFileSync needs permission in advance to read your Desktop, Documents and external drives."
+          }
+        }
+      }
+    },
+    "已 %lld 天未同步": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Not synced for %lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Not synced for %lld days"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "已安装": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed"
+          }
+        }
+      }
+    },
+    "已安装 FreeFileSync %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync %@ is installed"
+          }
+        }
+      }
+    },
+    "已确认 FreeFileSync 拥有「完全磁盘访问权限」。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync has Full Disk Access."
+          }
+        }
+      }
+    },
+    "已经有同名的任务了": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A task with this name already exists"
+          }
+        }
+      }
+    },
+    "已经装好了，重新检查": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I’ve Installed It, Check Again"
+          }
+        }
+      }
+    },
+    "开始使用": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
+          }
+        }
+      }
+    },
+    "开机登录后在菜单栏显示同步状态": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show sync status in the menu bar after you log in"
+          }
+        }
+      }
+    },
+    "打开系统设置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open System Settings"
+          }
+        }
+      }
+    },
+    "打开这次同步的日志": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the log for this sync"
+          }
+        }
+      }
+    },
+    "把新增和修改过的文件复制到目标，不删除目标里的任何文件。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copies new and changed files to the destination. Nothing in the destination is ever deleted."
+          }
+        }
+      }
+    },
+    "排除隐藏文件（以 . 开头的文件和文件夹）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exclude hidden files (files and folders starting with .)"
+          }
+        }
+      }
+    },
+    "文件同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Folder Sync"
+          }
+        }
+      }
+    },
+    "新建同步任务": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Sync Task"
+          }
+        }
+      }
+    },
+    "无变化": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No changes"
+          }
+        }
+      }
+    },
+    "无法加载定时任务 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t load the schedule %@"
+          }
+        }
+      }
+    },
+    "无法启动 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t start %@"
+          }
+        }
+      }
+    },
+    "无法更改登录项：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t change the login item: %@"
+          }
+        }
+      }
+    },
+    "日志": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logs"
+          }
+        }
+      }
+    },
+    "时间": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time"
+          }
+        }
+      }
+    },
+    "明天 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow %@"
+          }
+        }
+      }
+    },
+    "星期": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days"
+          }
+        }
+      }
+    },
+    "昨天 %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesterday %@"
+          }
+        }
+      }
+    },
+    "更新": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update"
+          }
+        }
+      }
+    },
+    "有警告": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completed with warnings"
+          }
+        }
+      }
+    },
+    "有警告（%@）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completed with warnings (%@)"
+          }
+        }
+      }
+    },
+    "有错误，点此查看": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed, click to see why"
+          }
+        }
+      }
+    },
+    "未选择": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not selected"
+          }
+        }
+      }
+    },
+    "检查": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check"
+          }
+        }
+      }
+    },
+    "欢迎使用 SyncBar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to SyncBar"
+          }
+        }
+      }
+    },
+    "正在同步…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syncing…"
+          }
+        }
+      }
+    },
+    "正在检查 FreeFileSync 的权限…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking FreeFileSync’s access…"
+          }
+        }
+      }
+    },
+    "正在检查…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking…"
+          }
+        }
+      }
+    },
+    "每周": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekly"
+          }
+        }
+      }
+    },
+    "每天": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily"
+          }
+        }
+      }
+    },
+    "源文件夹": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source Folder"
+          }
+        }
+      }
+    },
+    "源文件夹不能放在目标文件夹里面": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The source folder can’t be inside the destination folder"
+          }
+        }
+      }
+    },
+    "源文件夹和目标文件夹不能相同": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The source and destination folders can’t be the same"
+          }
+        }
+      }
+    },
+    "登录时启动": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open at Login"
+          }
+        }
+      }
+    },
+    "登录时自动启动 SyncBar（推荐）": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open SyncBar at login (recommended)"
+          }
+        }
+      }
+    },
+    "目标文件夹": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Destination Folder"
+          }
+        }
+      }
+    },
+    "目标文件夹不能放在源文件夹里面": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The destination folder can’t be inside the source folder"
+          }
+        }
+      }
+    },
+    "目标文件夹里已经有其他内容，「%@」里的文件会直接和它们放在一起。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The destination folder already has other items. Files from “%@” will be placed right next to them."
+          }
+        }
+      }
+    },
+    "移动硬盘未连接": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drive not connected"
+          }
+        }
+      }
+    },
+    "移动硬盘未连接，本次同步已跳过": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The drive isn’t connected, so this sync was skipped"
+          }
+        }
+      }
+    },
+    "稍后再说": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not Now"
+          }
+        }
+      }
+    },
+    "立即同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sync Now"
+          }
+        }
+      }
+    },
+    "编辑任务": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Task"
+          }
+        }
+      }
+    },
+    "编辑：%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit: %@"
+          }
+        }
+      }
+    },
+    "自定义": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom"
+          }
+        }
+      }
+    },
+    "装好 FreeFileSync 后再做这一步。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do this after installing FreeFileSync."
+          }
+        }
+      }
+    },
+    "让目标和源完全一致：源里删掉的文件，目标里也会删掉（移到废纸篓或云端回收站）。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makes the destination identical to the source: files deleted from the source are also deleted from the destination (moved to the Trash or the cloud recycle bin)."
+          }
+        }
+      }
+    },
+    "设置 SyncBar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set Up SyncBar"
+          }
+        }
+      }
+    },
+    "请填写任务名称": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter a name for the task"
+          }
+        }
+      }
+    },
+    "请至少选择一天": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose at least one day"
+          }
+        }
+      }
+    },
+    "请选择源文件夹": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a source folder"
+          }
+        }
+      }
+    },
+    "请选择目标文件夹": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a destination folder"
+          }
+        }
+      }
+    },
+    "过滤": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filters"
+          }
+        }
+      }
+    },
+    "运行方式": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schedule"
+          }
+        }
+      }
+    },
+    "还没有同步任务，点右上角 ＋ 新建一个": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sync tasks yet. Click ＋ at the top right to create one."
+          }
+        }
+      }
+    },
+    "还没有同步记录": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not synced yet"
+          }
+        }
+      }
+    },
+    "还没有安装 FreeFileSync，无法同步": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync isn’t installed, so nothing can sync"
+          }
+        }
+      }
+    },
+    "还没有权限。如果刚打开开关，FreeFileSync 正在运行的话需要先退出它。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No access yet. If you just turned the switch on and FreeFileSync is open, quit it first."
+          }
+        }
+      }
+    },
+    "还没确认 FreeFileSync 的权限": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FreeFileSync’s access hasn’t been checked yet"
+          }
+        }
+      }
+    },
+    "这个任务用的是在 FreeFileSync 里设置的同步规则（比如双向同步），保存时不会改动。": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This task uses sync rules set up in FreeFileSync (such as two-way sync). Saving leaves them unchanged."
+          }
+        }
+      }
+    },
+    "退出": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit"
+          }
+        }
+      }
+    },
+    "选择": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose"
+          }
+        }
+      }
+    },
+    "选择%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the %@"
+          }
+        }
+      }
+    },
+    "选择…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose…"
+          }
+        }
+      }
+    },
+    "镜像": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mirror"
+          }
+        }
+      }
+    },
+    "高级设置": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

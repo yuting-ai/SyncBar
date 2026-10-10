@@ -54,9 +54,13 @@ enum PermissionProbe {
             if open.isRunning { open.terminate(); return .unknown }
 
             guard let log = try fm.contentsOfDirectory(at: logs, includingPropertiesForKeys: nil).first,
-                  let text = try? String(contentsOf: log, encoding: .utf8)
+                  let html = try? String(contentsOf: log, encoding: .utf8)
             else { return .unknown }
-            return text.contains("Cannot open directory") ? .denied : .granted
+            // Errors are matched by the folder's path, which FreeFileSync doesn't translate. (A warning
+            // about not being able to write a lock file there shows up either way and is ignored.)
+            let details = LogReader.details(html: html)
+            guard details.result != nil else { return .unknown }
+            return details.errors.contains { $0.contains(protectedFolder) } ? .denied : .granted
         } catch {
             return .unknown
         }
