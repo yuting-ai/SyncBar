@@ -33,7 +33,7 @@ All versions and release notes: [Releases](https://github.com/yuting-ai/SyncBar/
 
 ## Features
 
-- **Status in the menu bar**: each task's last result (how many items, how much data) and its next scheduled run. The icon changes color when a sync fails, finishes with warnings, or a scheduled task hasn't synced for more than 2 days.
+- **Status in the menu bar**: each task's last result (how many items, how much data) and its next scheduled run.
 - **Create and edit tasks**: choose a source and a destination folder. By default SyncBar creates a folder named after the source inside the destination, and shows exactly where files will go.
 - **Two sync methods**
   - **Update**: copies new and changed files to the destination and never deletes anything there (default).
@@ -62,7 +62,7 @@ All versions and release notes: [Releases](https://github.com/yuting-ai/SyncBar/
 
 ## Usage
 
-Click the SyncBar icon in the menu bar to open the panel:
+Click SyncBar in the menu bar to open the panel:
 
 | To | Use |
 |---|---|
@@ -71,14 +71,6 @@ Click the SyncBar icon in the menu bar to open the panel:
 | Sync a task now | ▶ next to the task |
 | See the detailed log of a sync | Click the “Last: …” line under the task |
 | Start SyncBar when you log in | “Open at Login” at the bottom of the panel |
-
-What the menu bar icon means:
-
-| Icon | Meaning |
-|---|---|
-| Drive with ✓ | All tasks are fine |
-| Circular arrows | Syncing |
-| Drive with ! | A task failed or finished with warnings, or a scheduled task hasn't synced for more than 2 days |
 
 ### What happens when I delete a task?
 
