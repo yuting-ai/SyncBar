@@ -177,7 +177,7 @@ SyncDock doesn't rely on the wording of FreeFileSync's logs (FreeFileSync writes
 
 ### Releasing
 
-`scripts/release.sh` does everything in one command: archive → Developer ID signing → notarize and staple the app → build the DMG → sign and notarize the DMG → Gatekeeper check. The result is `build/release/SyncDock-<version>.dmg`.
+`scripts/release.sh` does everything in one command: archive → Developer ID signing → notarize and staple the app → build the DMG → sign and notarize the DMG → Gatekeeper check. The result is `build.noindex/release/SyncDock-<version>.dmg`.
 
 Before the first run, store the notarization credentials in the keychain (this needs an app-specific password for your Apple ID):
 
@@ -196,8 +196,8 @@ Add `--skip-notarize` to check signing and packaging without submitting for nota
 Publish it on GitHub. The DMG is uploaded as `SyncDock.dmg` so that the README's download link (`releases/latest/download/SyncDock.dmg`) always points to the newest version:
 
 ```bash
-cp build/release/SyncDock-1.1.dmg build/release/SyncDock.dmg
-gh release create v1.1 build/release/SyncDock.dmg --title "SyncDock 1.1" --notes "…"
+cp build.noindex/release/SyncDock-1.1.dmg build.noindex/release/SyncDock.dmg
+gh release create v1.1 build.noindex/release/SyncDock.dmg --title "SyncDock 1.1" --notes "…"
 ```
 
 ## License

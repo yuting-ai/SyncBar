@@ -11,8 +11,8 @@ DEMO=$(mktemp -d -t syncdock-demo)
 trap 'rm -rf "$DEMO"' EXIT
 
 xcodebuild -project "$ROOT/SyncDock.xcodeproj" -scheme SyncDock -configuration Debug \
-    -derivedDataPath "$ROOT/build/DerivedData" build -quiet
-APP=$ROOT/build/DerivedData/Build/Products/Debug/SyncDock.app/Contents/MacOS/SyncDock
+    -derivedDataPath "$ROOT/build.noindex/DerivedData" build -quiet
+APP=$ROOT/build.noindex/DerivedData/Build/Products/Debug/SyncDock.app/Contents/MacOS/SyncDock
 
 # Demo tasks: launch agents, batch jobs and logs in $DEMO/<lang>.
 /usr/bin/python3 -I - "$DEMO" "$HOME" <<'PY'

@@ -15,7 +15,7 @@ SKIP_NOTARIZE=false
 [[ "${1:-}" == "--skip-notarize" ]] && SKIP_NOTARIZE=true
 
 ROOT=${0:A:h:h}
-OUT=$ROOT/build/release
+OUT=$ROOT/build.noindex/release
 ARCHIVE=$OUT/SyncDock.xcarchive
 EXPORT=$OUT/export
 APP=$EXPORT/SyncDock.app
@@ -47,11 +47,11 @@ security find-identity -v -p codesigning | grep -q "Developer ID Application: .*
 
 rm -rf "$OUT" && mkdir -p "$OUT"
 # Keep Spotlight from listing build copies of SyncDock next to the installed one.
-touch "$ROOT/build/.metadata_never_index"
+# 输出目录带 .noindex 后缀，Spotlight 不会把编译产物当成应用收录（.metadata_never_index 只在卷根目录生效）
 
 step "Archiving"
 xcodebuild -project "$ROOT/SyncDock.xcodeproj" -scheme SyncDock -configuration Release \
-    -destination "generic/platform=macOS" -archivePath "$ARCHIVE" -derivedDataPath "$ROOT/build/DerivedData" \
+    -destination "generic/platform=macOS" -archivePath "$ARCHIVE" -derivedDataPath "$ROOT/build.noindex/DerivedData" \
     archive -quiet
 
 step "Exporting with Developer ID"

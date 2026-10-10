@@ -177,7 +177,7 @@ SyncDock 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync �
 
 ### 发布
 
-`scripts/release.sh` 一条命令完成：归档 → Developer ID 签名 → 公证并附上公证结果 → 制作 DMG → DMG 签名、公证 → Gatekeeper 验证。产物在 `build/release/SyncDock-<版本>.dmg`。
+`scripts/release.sh` 一条命令完成：归档 → Developer ID 签名 → 公证并附上公证结果 → 制作 DMG → DMG 签名、公证 → Gatekeeper 验证。产物在 `build.noindex/release/SyncDock-<版本>.dmg`。
 
 第一次使用前，需要把公证凭证存进钥匙串（需要 Apple ID 的 App 专用密码）：
 
@@ -196,8 +196,8 @@ scripts/release.sh
 发布到 GitHub。DMG 统一以 `SyncDock.dmg` 的文件名上传，这样 README 里的下载链接（`releases/latest/download/SyncDock.dmg`）始终指向最新版本：
 
 ```bash
-cp build/release/SyncDock-1.1.dmg build/release/SyncDock.dmg
-gh release create v1.1 build/release/SyncDock.dmg --title "SyncDock 1.1" --notes "…"
+cp build.noindex/release/SyncDock-1.1.dmg build.noindex/release/SyncDock.dmg
+gh release create v1.1 build.noindex/release/SyncDock.dmg --title "SyncDock 1.1" --notes "…"
 ```
 
 ## 许可
