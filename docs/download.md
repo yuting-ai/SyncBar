@@ -32,7 +32,7 @@ macOS 15 或更高版本 · Apple 芯片和 Intel Mac 均可 · 中文 / English
 ## 常见问题
 
 **SyncBar 安全吗？**
-SyncBar 经过 Apple 公证，打开时不会被系统拦截。默认的「更新」模式只会往备份里添加和更新文件，从不删除。
+SyncBar 经过 Apple 公证，打开时不会被系统拦截，源代码也完全公开。默认的「更新」模式只会往备份里添加和更新文件，从不删除。
 
 **为什么还要装 FreeFileSync？**
 FreeFileSync 是一款成熟的免费开源同步软件，已经发展了十多年。SyncBar 把它的同步能力包装成更简单的界面，并负责定时运行。安装后不需要打开它。
@@ -69,4 +69,4 @@ SyncBar 的界面提供「更新」和「镜像」两种单向同步。需要双
 
 ---
 
-<sub>SyncBar 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，以 GPL-3.0 许可发布。</sub>
+<sub>SyncBar 是开源软件，以 GPL-3.0 许可发布，源代码见 [GitHub](https://github.com/yuting-ai/SyncBar)。SyncBar 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，同样以 GPL-3.0 许可发布。</sub>

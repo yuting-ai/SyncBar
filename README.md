@@ -183,4 +183,8 @@ scripts/release.sh
 
 ## 许可
 
-FreeFileSync 以 GPL-3.0 许可发布。SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。
+SyncBar 以 [GNU 通用公共许可证 v3.0（GPL-3.0）](LICENSE) 发布，与 FreeFileSync 相同。你可以自由使用、修改和再分发 SyncBar；分发修改后的版本时，需要同样以 GPL-3.0 公开源代码。
+
+Copyright © 2026 Yuting Bai
+
+SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。
