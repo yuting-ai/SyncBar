@@ -248,6 +248,22 @@ struct BatchFile {
         return pair
     }
 
+    /// A job that only lists `source` (the filter matches nothing) and never shows a dialog.
+    static func probe(source: String, target: String, logFolder: String) -> BatchFile {
+        var batch = BatchFile()
+        var draft = TaskDraft()
+        draft.source = source
+        draft.target = target
+        draft.createSubfolder = false
+        draft.excludeHidden = false
+        batch.apply(draft, isNew: true)
+        batch.element("/FreeFileSync/Filter/Include")?.setChildren([XMLElement(name: "Item", stringValue: "*/__syncbar_probe__")])
+        batch.element("/FreeFileSync/LogFolder")?.stringValue = logFolder
+        batch.element("/FreeFileSync/Errors")?.attribute(forName: "Retry")?.stringValue = "0"
+        batch.element("/FreeFileSync/Batch/ErrorDialog")?.stringValue = "Cancel"
+        return batch
+    }
+
     // MARK: XPath helpers
 
     private func nodes(_ xpath: String) -> [XMLNode] { (try? doc.nodes(forXPath: xpath)) ?? [] }
@@ -295,7 +311,7 @@ struct BatchFile {
 
 /// The launch agent that runs a batch job, skipping with a notification when its drive is unplugged.
 enum LaunchAgent {
-    static let script = #"if [ -n "$1" ] && [ ! -d "$1" ]; then /usr/bin/osascript -e "display notification \"移动硬盘未连接，本次同步已跳过\" with title \"FreeFileSync: $(basename "$2" .ffs_batch)\""; exit 0; fi; exec /usr/bin/open -g -a /Applications/FreeFileSync.app "$2""#
+    static let script = #"if [ -n "$1" ] && [ ! -d "$1" ]; then /usr/bin/osascript -e "display notification \"移动硬盘未连接，本次同步已跳过\" with title \"FreeFileSync: $(basename "$2" .ffs_batch)\""; exit 0; fi; exec /usr/bin/open -g -b org.freefilesync.FreeFileSync "$2""#
 
     static func newLabel() -> String {
         Paths.labelPrefix + "task-" + UUID().uuidString.prefix(8).lowercased()

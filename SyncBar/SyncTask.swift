@@ -63,7 +63,6 @@ enum Paths {
     /// `SYNCBAR_LOGS` overrides the log folder, for previewing states without touching real logs.
     static let logs = ProcessInfo.processInfo.environment["SYNCBAR_LOGS"].map { URL(filePath: $0) }
         ?? home.appending(path: "Library/Application Support/FreeFileSync/Logs")
-    static let freeFileSyncApp = URL(filePath: "/Applications/FreeFileSync.app")
     static let labelPrefix = "local.freefilesync."
     /// Where SyncBar keeps the batch jobs it creates.
     static let jobs = home.appending(path: "FreeFileSync")
@@ -159,15 +158,23 @@ enum LogReader {
 
     /// Pulls "Elements processed: 75 (1.64 GB)" out of a FreeFileSync HTML log.
     static func summary(of url: URL) -> String? {
-        guard let handle = try? FileHandle(forReadingFrom: url) else { return nil }
-        defer { try? handle.close() }
-        // The summary sits at the top; logs of big runs can be several MB.
-        guard let head = try? handle.read(upToCount: 16_384),
-              let html = String(data: head, encoding: .utf8)
-        else { return nil }
-        let text = html.replacing(/<[^>]+>/, with: " ")
+        guard let text = head(of: url) else { return nil }
         guard let m = text.firstMatch(of: /Elements processed:\s*([\d,]+)\s*\(([^)]+)\)/) else { return nil }
         let count = m.1.replacing(",", with: "")
         return count == "0" ? "无变化" : "\(count) 项 · \(m.2)"
+    }
+
+    /// Whether the run hit macOS privacy protection, i.e. FreeFileSync lacks Full Disk Access.
+    static func mentionsPermissionDenied(_ url: URL) -> Bool {
+        guard let text = head(of: url) else { return false }
+        return text.contains("EPERM") || text.contains("Operation not permitted")
+    }
+
+    /// The text of the log's first 16 KB, where the summary and errors sit; big runs' logs can be several MB.
+    private static func head(of url: URL) -> String? {
+        guard let handle = try? FileHandle(forReadingFrom: url) else { return nil }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: 16_384) else { return nil }
+        return String(decoding: data, as: UTF8.self).replacing(/<[^>]+>/, with: " ")
     }
 }

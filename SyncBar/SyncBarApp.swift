@@ -3,6 +3,7 @@ import SwiftUI
 @main
 struct SyncBarApp: App {
     static let editorID = "editor"
+    static let setupID = "setup"
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var store = SyncStore()
@@ -11,9 +12,17 @@ struct SyncBarApp: App {
         MenuBarExtra {
             MenuView(store: store)
         } label: {
-            Image(systemName: store.overall.symbol)
+            MenuBarLabel(store: store)
         }
         .menuBarExtraStyle(.window)
+
+        Window("设置 SyncBar", id: Self.setupID) {
+            SetupView(store: store)
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .defaultLaunchBehavior(.suppressed)
+        .restorationBehavior(.disabled)
 
         Window("同步任务", id: Self.editorID) {
             EditorView(store: store)
@@ -25,10 +34,27 @@ struct SyncBarApp: App {
     }
 }
 
+/// The menu bar icon. It lives for the whole session, so it also runs the launch-time setup check.
+private struct MenuBarLabel: View {
+    let store: SyncStore
+    @Environment(\.openWindow) private var openWindow
+
+    var body: some View {
+        Image(systemName: store.overall.symbol)
+            .task {
+                await store.checkSetup()
+                if !store.setupComplete {
+                    openWindow(id: SyncBarApp.setupID)
+                    NSApp.activate()
+                }
+            }
+    }
+}
+
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // `SyncBar --snapshot out.png [editor-label|new]` renders the panel (or the editor) to a file
-        // and quits; used for checking the layout.
+        // `SyncBar --snapshot out.png [task-label|new|setup|setup-missing|setup-denied]` renders the
+        // panel, the editor or the setup window to a file and quits; used for checking the layout.
         let args = CommandLine.arguments
         if let i = args.firstIndex(of: "--snapshot"), i + 1 < args.count {
             MainActor.assumeIsolated {
@@ -44,7 +70,14 @@ enum Snapshot {
     static func render(to url: URL, editing: String?) {
         let store = SyncStore(watch: false)
         let root: AnyView
-        if let editing {
+        if let editing, editing.hasPrefix("setup") {
+            #if DEBUG
+            // "setup", "setup-missing" or "setup-denied"
+            store.previewSetup(installed: editing != "setup-missing",
+                               permission: editing == "setup-denied" ? .denied : .granted)
+            #endif
+            root = AnyView(SetupView(store: store))
+        } else if let editing {
             if let task = store.tasks.first(where: { $0.label == editing }) {
                 store.beginEditing(task)
             } else {

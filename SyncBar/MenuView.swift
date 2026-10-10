@@ -18,6 +18,11 @@ struct MenuView: View {
 
             Divider()
 
+            if !store.setupComplete {
+                setupBanner
+                Divider()
+            }
+
             if store.tasks.isEmpty {
                 Text("还没有同步任务，点右上角 ＋ 新建一个")
                     .foregroundStyle(.secondary)
@@ -79,6 +84,31 @@ struct MenuView: View {
             .help("新建同步任务")
         }
         .buttonStyle(.borderless)
+    }
+
+    private var setupBanner: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+            Text(setupProblem).font(.callout)
+            Spacer()
+            Button("去设置") {
+                openWindow(id: SyncBarApp.setupID)
+                NSApp.activate()
+            }
+            .controlSize(.small)
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 9)
+        .background(Color.orange.opacity(0.08))
+    }
+
+    private var setupProblem: String {
+        if !store.freeFileSyncInstalled { return "还没有安装 FreeFileSync，无法同步" }
+        switch store.permission {
+        case .checking: return "正在检查 FreeFileSync 的权限…"
+        case .denied: return "FreeFileSync 没有完全磁盘访问权限"
+        case .unknown, .granted: return "还没确认 FreeFileSync 的权限"
+        }
     }
 
     private var footer: some View {
@@ -215,7 +245,7 @@ private struct TaskRow: View {
             } label: {
                 Image(systemName: "play.fill")
             }
-            .disabled(store.isRunning(task) || task.isVolumeMissing)
+            .disabled(store.isRunning(task) || task.isVolumeMissing || !store.freeFileSyncInstalled)
             .help(task.isVolumeMissing ? "移动硬盘未连接" : "立即同步")
         }
         .buttonStyle(.borderless)

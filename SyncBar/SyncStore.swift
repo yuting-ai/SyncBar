@@ -28,6 +28,7 @@ final class SyncStore {
     private(set) var lastError: String?
 
     private var summaries: [URL: String] = [:]
+    private var permissionErrors: [URL: Bool] = [:]
     private var timer: Timer?
     private var watcher: DispatchSourceFileSystemObject?
 
@@ -64,6 +65,8 @@ final class SyncStore {
             latest[name]?.summary = summaries[log.url]
         }
         logs = latest
+        freeFileSyncInstalled = FreeFileSync.appURL != nil
+        noticePermissionErrors()
 
         // Log files are named after the run's start time, so a log at or after
         // the kickstart (minus clock slack) belongs to our run.
@@ -85,6 +88,58 @@ final class SyncStore {
             lastError = nil
         } else {
             lastError = "无法启动 \(task.name)"
+        }
+    }
+
+    // MARK: Setup
+
+    enum Permission { case unknown, checking, granted, denied }
+
+    private static let verifiedAtKey = "fullDiskAccessVerifiedAt"
+
+    private(set) var freeFileSyncInstalled = FreeFileSync.appURL != nil
+    /// Whether FreeFileSync has Full Disk Access, remembered from the last successful check.
+    private(set) var permission: Permission =
+        UserDefaults.standard.object(forKey: SyncStore.verifiedAtKey) == nil ? .unknown : .granted
+
+    var setupComplete: Bool { freeFileSyncInstalled && permission == .granted }
+
+    /// Re-detects FreeFileSync and, unless already verified (or `force`), probes its permission.
+    func checkSetup(force: Bool = false) async {
+        freeFileSyncInstalled = FreeFileSync.appURL != nil
+        guard freeFileSyncInstalled, permission != .checking, force || permission != .granted else { return }
+        permission = .checking
+        switch await PermissionProbe.run() {
+        case .granted:
+            permission = .granted
+            UserDefaults.standard.set(Date.now, forKey: Self.verifiedAtKey)
+        case .denied:
+            permission = .denied
+            UserDefaults.standard.removeObject(forKey: Self.verifiedAtKey)
+        case .unknown:
+            permission = .unknown
+        }
+    }
+
+    #if DEBUG
+    /// Forces a setup state for layout snapshots.
+    func previewSetup(installed: Bool, permission: Permission) {
+        freeFileSyncInstalled = installed
+        self.permission = permission
+    }
+    #endif
+
+    /// A run that failed with EPERM after the last successful check means access was revoked.
+    private func noticePermissionErrors() {
+        guard permission == .granted,
+              let verifiedAt = UserDefaults.standard.object(forKey: Self.verifiedAtKey) as? Date else { return }
+        for log in logs.values where log.result != .success && log.date > verifiedAt {
+            if permissionErrors[log.url] == nil { permissionErrors[log.url] = LogReader.mentionsPermissionDenied(log.url) }
+            if permissionErrors[log.url] == true {
+                permission = .denied
+                UserDefaults.standard.removeObject(forKey: Self.verifiedAtKey)
+                return
+            }
         }
     }
 
@@ -196,11 +251,13 @@ final class SyncStore {
         let config = NSWorkspace.OpenConfiguration()
         config.arguments = ["-edit", task.batchURL.path(percentEncoded: false)]
         config.createsNewApplicationInstance = true
-        NSWorkspace.shared.openApplication(at: Paths.freeFileSyncApp, configuration: config)
+        guard let app = FreeFileSync.appURL else { return }
+        NSWorkspace.shared.openApplication(at: app, configuration: config)
     }
 
     func openFreeFileSync() {
-        NSWorkspace.shared.openApplication(at: Paths.freeFileSyncApp, configuration: .init())
+        guard let app = FreeFileSync.appURL else { return }
+        NSWorkspace.shared.openApplication(at: app, configuration: .init())
     }
 
     func openLogsFolder() {
