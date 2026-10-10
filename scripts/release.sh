@@ -46,6 +46,8 @@ security find-identity -v -p codesigning | grep -q "Developer ID Application: .*
     || fail "no 'Developer ID Application' certificate for team $TEAM_ID in the keychain"
 
 rm -rf "$OUT" && mkdir -p "$OUT"
+# Keep Spotlight from listing build copies of SyncBar next to the installed one.
+touch "$ROOT/build/.metadata_never_index"
 
 step "Archiving"
 xcodebuild -project "$ROOT/SyncBar.xcodeproj" -scheme SyncBar -configuration Release \
@@ -100,6 +102,9 @@ if ! $SKIP_NOTARIZE; then
     spctl --assess --type open --context context:primary-signature -vv "$DMG" 2>&1
     xcrun stapler validate -q "$DMG" && print "DMG ticket stapled"
 fi
+
+# Only the DMG (and notarization records) are worth keeping; extra app copies confuse Spotlight and Launch Services.
+rm -rf "$STAGE" "$EXPORT" "$ARCHIVE" "$OUT/SyncBar.zip"
 
 step "Done"
 print "$DMG ($(du -h "$DMG" | cut -f1))"
