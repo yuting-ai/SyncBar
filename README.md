@@ -6,15 +6,30 @@ A macOS menu bar app for keeping folders in sync with a simple interface: pick a
 
 The syncing itself is done by the free, open-source [FreeFileSync](https://freefilesync.org). SyncBar adds what FreeFileSync doesn't focus on: an easy interface, scheduled runs, and status at a glance.
 
+<p align="center"><img src="docs/images/panel-en.png" width="428" alt="SyncBar's menu bar panel listing three sync tasks"></p>
+
 > SyncBar is an independent project and is not affiliated with FreeFileSync.
 
 ## Download
 
 **[⬇ Download SyncBar for macOS](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)**
 
-macOS 15 or later · Apple silicon and Intel · Notarized by Apple · Free and open source
+macOS 15 or later · Apple silicon and Intel · Notarized by Apple · Free and open source (MIT)
 
 All versions and release notes: [Releases](https://github.com/yuting-ai/SyncBar/releases)
+
+## Screenshots
+
+<table>
+  <tr>
+    <th>Editing a task</th>
+    <th>First-run setup</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/images/editor-en.png" width="380" alt="Task editor with source and destination folders, sync method, filters and a weekly schedule"></td>
+    <td valign="top"><img src="docs/images/setup-en.png" width="420" alt="First-run setup checking FreeFileSync and Full Disk Access"></td>
+  </tr>
+</table>
 
 ## Features
 
@@ -148,7 +163,13 @@ SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png <task label>    # editing 
 SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # setup window (Debug builds: setup / setup-missing / setup-denied)
 ```
 
-Set the environment variable `SYNCBAR_LOGS=<folder>` to make SyncBar read a different log folder, for previewing failed, warning and other states with fake logs.
+Set the environment variable `SYNCBAR_LOGS=<folder>` to make SyncBar read a different log folder, for previewing failed, warning and other states with fake logs. `SYNCBAR_AGENTS=<folder>` does the same for the launch agents it reads tasks from.
+
+The README screenshots are rendered from demo tasks, so no real folder names show up. Regenerate them (both languages) after changing the interface:
+
+```bash
+scripts/make-screenshots.sh
+```
 
 ### Localization
 
@@ -161,17 +182,6 @@ xcodebuild -exportLocalizations -project SyncBar.xcodeproj -localizationPath /tm
 To render the interface in a given language: `SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`.
 
 SyncBar doesn't rely on the wording of FreeFileSync's logs (FreeFileSync writes them in its own interface language). It reads the result icons' file names, the numbers and the error codes instead, so it works whatever language FreeFileSync is set to.
-
-### Icon
-
-The app icon is drawn in code by `scripts/make-icon.swift` (it doesn't use SF Symbols, whose license excludes app icons). To regenerate it after changes:
-
-```bash
-for pt in 16 32 128 256 512; do
-  swift scripts/make-icon.swift SyncBar/Assets.xcassets/AppIcon.appiconset/icon_${pt}x${pt}.png $pt
-  swift scripts/make-icon.swift SyncBar/Assets.xcassets/AppIcon.appiconset/icon_${pt}x${pt}@2x.png $((pt * 2))
-done
-```
 
 ### Releasing
 
@@ -200,8 +210,6 @@ gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "
 
 ## License
 
-SyncBar is released under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE), the same license as FreeFileSync. You're free to use, modify and redistribute SyncBar; if you distribute a modified version, you must also release its source code under GPL-3.0.
+SyncBar is released under the [MIT License](LICENSE). Copyright © 2026 Yuting Bai.
 
-Copyright © 2026 Yuting Bai
-
-SyncBar contains no FreeFileSync code. It only runs the copy of FreeFileSync the user installed, and doesn't bundle or distribute it.
+SyncBar contains no FreeFileSync code. It only runs the copy of FreeFileSync the user installed, and doesn't bundle or distribute it. FreeFileSync itself is licensed under GPL-3.0.

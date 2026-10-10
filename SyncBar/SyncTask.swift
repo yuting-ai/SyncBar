@@ -60,7 +60,9 @@ struct SyncLog: Equatable {
 
 enum Paths {
     static let home = FileManager.default.homeDirectoryForCurrentUser
-    static let launchAgents = home.appending(path: "Library/LaunchAgents")
+    /// `SYNCBAR_AGENTS` overrides where tasks are read from, for screenshots with demo tasks.
+    static let launchAgents = ProcessInfo.processInfo.environment["SYNCBAR_AGENTS"].map { URL(filePath: $0) }
+        ?? home.appending(path: "Library/LaunchAgents")
     /// `SYNCBAR_LOGS` overrides the log folder, for previewing states without touching real logs.
     static let logs = ProcessInfo.processInfo.environment["SYNCBAR_LOGS"].map { URL(filePath: $0) }
         ?? home.appending(path: "Library/Application Support/FreeFileSync/Logs")

@@ -6,15 +6,30 @@
 
 同步本身由免费开源的 [FreeFileSync](https://freefilesync.org) 执行，SyncBar 负责它不擅长的部分：好用的界面、定时运行和状态一目了然。
 
+<p align="center"><img src="docs/images/panel-zh.png" width="428" alt="SyncBar 菜单栏面板，列出三个同步任务"></p>
+
 > SyncBar 是独立开发的工具，不是 FreeFileSync 的官方产品。
 
 ## 下载
 
 **[⬇ 下载 SyncBar（macOS）](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)**
 
-macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公证 · 免费开源
+macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公证 · 免费开源（MIT）
 
 所有版本和更新说明：[Releases](https://github.com/yuting-ai/SyncBar/releases)
+
+## 截图
+
+<table>
+  <tr>
+    <th>编辑任务</th>
+    <th>首次启动引导</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/images/editor-zh.png" width="380" alt="编辑任务窗口：源文件夹、目标文件夹、同步方式、过滤和每周定时"></td>
+    <td valign="top"><img src="docs/images/setup-zh.png" width="420" alt="首次启动引导：检查 FreeFileSync 和完全磁盘访问权限"></td>
+  </tr>
+</table>
 
 ## 功能
 
@@ -148,7 +163,13 @@ SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png <任务 label>    # 编辑
 SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # 引导页（Debug 版：setup / setup-missing / setup-denied）
 ```
 
-设置环境变量 `SYNCBAR_LOGS=<文件夹>` 可以让 SyncBar 读取另一个日志文件夹，用假日志预览出错、警告等状态。
+设置环境变量 `SYNCBAR_LOGS=<文件夹>` 可以让 SyncBar 读取另一个日志文件夹，用假日志预览出错、警告等状态。`SYNCBAR_AGENTS=<文件夹>` 同理，用来指定读取任务的定时配置文件夹。
+
+README 里的截图用演示任务渲染，不会出现真实的文件夹名。修改界面后，重新生成中英文截图：
+
+```bash
+scripts/make-screenshots.sh
+```
 
 ### 本地化
 
@@ -161,17 +182,6 @@ xcodebuild -exportLocalizations -project SyncBar.xcodeproj -localizationPath /tm
 用指定语言渲染界面：`SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`。
 
 SyncBar 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync 会用它自己的界面语言写日志），而是看日志里结果图标的文件名、数字和错误码，所以无论 FreeFileSync 设置成什么语言都能正确判断。
-
-### 图标
-
-App 图标由 `scripts/make-icon.swift` 用代码绘制（没有使用 SF Symbols，它的许可不允许用于 App 图标）。修改后重新生成：
-
-```bash
-for pt in 16 32 128 256 512; do
-  swift scripts/make-icon.swift SyncBar/Assets.xcassets/AppIcon.appiconset/icon_${pt}x${pt}.png $pt
-  swift scripts/make-icon.swift SyncBar/Assets.xcassets/AppIcon.appiconset/icon_${pt}x${pt}@2x.png $((pt * 2))
-done
-```
 
 ### 发布
 
@@ -200,8 +210,6 @@ gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "
 
 ## 许可
 
-SyncBar 以 [GNU 通用公共许可证 v3.0（GPL-3.0）](LICENSE) 发布，与 FreeFileSync 相同。你可以自由使用、修改和再分发 SyncBar；分发修改后的版本时，需要同样以 GPL-3.0 公开源代码。
+SyncBar 以 [MIT 许可证](LICENSE) 发布。Copyright © 2026 Yuting Bai。
 
-Copyright © 2026 Yuting Bai
-
-SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。
+SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。FreeFileSync 本身以 GPL-3.0 许可发布。

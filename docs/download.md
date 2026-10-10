@@ -69,4 +69,4 @@ SyncBar 的界面提供「更新」和「镜像」两种单向同步。需要双
 
 ---
 
-<sub>SyncBar 是开源软件，以 GPL-3.0 许可发布，源代码见 [GitHub](https://github.com/yuting-ai/SyncBar)。SyncBar 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，同样以 GPL-3.0 许可发布。</sub>
+<sub>SyncBar 是开源软件，以 MIT 许可发布，源代码见 [GitHub](https://github.com/yuting-ai/SyncBar)。SyncBar 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，以 GPL-3.0 许可发布。</sub>
