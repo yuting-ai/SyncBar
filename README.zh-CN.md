@@ -210,6 +210,6 @@ gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "
 
 ## 许可
 
-SyncBar 以 [MIT 许可证](LICENSE) 发布。Copyright © 2026 Yuting Bai。
+SyncBar 以 [MIT 许可证](LICENSE) 发布。
 
 SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。FreeFileSync 本身以 GPL-3.0 许可发布。

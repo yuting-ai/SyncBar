@@ -210,6 +210,6 @@ gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "
 
 ## License
 
-SyncBar is released under the [MIT License](LICENSE). Copyright © 2026 Yuting Bai.
+SyncBar is released under the [MIT License](LICENSE).
 
 SyncBar contains no FreeFileSync code. It only runs the copy of FreeFileSync the user installed, and doesn't bundle or distribute it. FreeFileSync itself is licensed under GPL-3.0.
