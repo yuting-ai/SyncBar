@@ -1,160 +1,162 @@
 # SyncBar
 
-一个 macOS 菜单栏小工具，用简单的界面管理文件夹同步：选好源文件夹和目标文件夹，设好什么时候同步，剩下的交给它在后台完成。
+[中文](README.zh-CN.md) | **English**
 
-同步本身由免费开源的 [FreeFileSync](https://freefilesync.org) 执行，SyncBar 负责它不擅长的部分：好用的界面、定时运行和状态一目了然。
+A macOS menu bar app for keeping folders in sync with a simple interface: pick a source and a destination folder, choose when to sync, and SyncBar takes care of the rest in the background.
 
-> SyncBar 是独立开发的工具，不是 FreeFileSync 的官方产品。
+The syncing itself is done by the free, open-source [FreeFileSync](https://freefilesync.org). SyncBar adds what FreeFileSync doesn't focus on: an easy interface, scheduled runs, and status at a glance.
 
-## 功能
+> SyncBar is an independent project and is not affiliated with FreeFileSync.
 
-- **菜单栏状态**：每个任务上次同步的结果（复制了多少项、多大）、下次什么时候运行；出错、有警告或超过 2 天没同步时，图标会变色提醒。
-- **新建和编辑任务**：选择源文件夹、目标文件夹，默认在目标里新建同名文件夹，并预览实际同步到哪里。
-- **两种同步方式**
-  - **更新**：只把新增和修改过的文件复制到目标，从不删除目标里的文件（默认）。
-  - **镜像**：让目标和源完全一致，源里删掉的文件，目标里也会删掉（移到废纸篓）。
-- **过滤**：排除隐藏文件，并可以单独保留 `.git` 文件夹（适合备份代码项目）。
-- **定时**：仅手动 / 每天 / 每周几，在后台运行，**不需要开着任何软件**。
-- **立即同步**：随时手动同步一次。
-- **移动硬盘感知**：硬盘没插时跳过本次同步并发通知，不会把文件写到电脑内置硬盘上。
-- **首次启动引导**：检查 FreeFileSync 是否已安装、是否有「完全磁盘访问权限」，一步步带你完成设置。
-- **中文和英文界面**：自动跟随系统语言。
+## Features
 
-## 系统要求
+- **Status in the menu bar**: each task's last result (how many items, how much data) and its next scheduled run. The icon changes color when a sync fails, finishes with warnings, or a scheduled task hasn't synced for more than 2 days.
+- **Create and edit tasks**: choose a source and a destination folder. By default SyncBar creates a folder named after the source inside the destination, and shows exactly where files will go.
+- **Two sync methods**
+  - **Update**: copies new and changed files to the destination and never deletes anything there (default).
+  - **Mirror**: makes the destination identical to the source; files deleted from the source are also deleted from the destination (moved to the Trash).
+- **Filters**: exclude hidden files, optionally keeping `.git` folders (handy for backing up code).
+- **Schedules**: manual, daily, or on chosen weekdays. Runs in the background with **no app needing to stay open**.
+- **Sync Now**: run any task once, whenever you like.
+- **External drive aware**: if the drive isn't connected, the sync is skipped with a notification, so nothing is written to your internal disk by mistake.
+- **First-run setup**: checks that FreeFileSync is installed and has Full Disk Access, and walks you through each step.
+- **Chinese and English interface**: follows your system language.
 
-- macOS 15 或更高版本（Apple 芯片和 Intel 均可）
-- [FreeFileSync](https://freefilesync.org/download.php)（免费）
+## Requirements
 
-## 安装
+- macOS 15 or later (Apple silicon or Intel)
+- [FreeFileSync](https://freefilesync.org/download.php) (free)
 
-1. 下载 `SyncBar-x.x.dmg`，双击打开，把 SyncBar 拖进「应用程序」文件夹。
-2. 打开 SyncBar。它没有窗口，也不在程序坞里，只会出现在屏幕右上角的**菜单栏**。
-3. 第一次打开时会弹出「欢迎使用 SyncBar」，按提示完成两步：
-   1. **安装 FreeFileSync**：点「下载 FreeFileSync」，装好后回到 SyncBar，会自动识别。
-   2. **允许 FreeFileSync 访问所有文件**：点「打开系统设置」，在「完全磁盘访问权限」列表里点 ＋，选择 FreeFileSync 并打开开关。回到 SyncBar 后会自动检查。
+## Installation
 
-> **为什么需要「完全磁盘访问权限」？** 定时同步在后台运行，没有人能点「允许」。提前授权后，FreeFileSync 才能读取桌面、文稿和移动硬盘里的文件。这个权限是授予 FreeFileSync 的，SyncBar 自己不需要任何特殊权限。
+1. Download `SyncBar-x.x.dmg`, open it, and drag SyncBar into the Applications folder.
+2. Open SyncBar. It has no window and no Dock icon; it appears in the **menu bar** at the top right of the screen.
+3. The first time, a “Welcome to SyncBar” window guides you through two steps:
+   1. **Install FreeFileSync**: click “Download FreeFileSync”. Once it's installed, SyncBar detects it automatically.
+   2. **Allow FreeFileSync to access all files**: click “Open System Settings”, click ＋ below the Full Disk Access list, choose FreeFileSync and turn on its switch. SyncBar checks again when you come back.
 
-## 使用
+> **Why Full Disk Access?** Scheduled syncs run in the background, where nobody can click “Allow”. Granting access in advance lets FreeFileSync read your Desktop, Documents and external drives. The permission is for FreeFileSync; SyncBar itself needs no special permissions.
 
-点菜单栏里的 SyncBar 图标打开面板：
+## Usage
 
-| 操作 | 位置 |
+Click the SyncBar icon in the menu bar to open the panel:
+
+| To | Use |
 |---|---|
-| 新建任务 | 面板右上角的 ＋ |
-| 编辑或删除任务 | 任务右边的 ⚙ |
-| 立即同步一次 | 任务右边的 ▶ |
-| 查看某次同步的详细日志 | 点任务下面的「上次 …」那一行 |
-| 开机自动启动 SyncBar | 面板底部「登录时启动」 |
+| Create a task | ＋ at the top right of the panel |
+| Edit or delete a task | ⚙ next to the task |
+| Sync a task now | ▶ next to the task |
+| See the detailed log of a sync | Click the “Last: …” line under the task |
+| Start SyncBar when you log in | “Open at Login” at the bottom of the panel |
 
-菜单栏图标的含义：
+What the menu bar icon means:
 
-| 图标 | 含义 |
+| Icon | Meaning |
 |---|---|
-| 硬盘带 ✓ | 所有任务正常 |
-| 循环箭头 | 正在同步 |
-| 硬盘带 ! | 有任务出错、有警告，或者定时任务超过 2 天没有同步 |
+| Drive with ✓ | All tasks are fine |
+| Circular arrows | Syncing |
+| Drive with ! | A task failed or finished with warnings, or a scheduled task hasn't synced for more than 2 days |
 
-### 删除任务会怎样？
+### What happens when I delete a task?
 
-只删除同步任务和它的定时设置（移到废纸篓），**已经同步过去的文件不受影响**。
+Only the task and its schedule are deleted (moved to the Trash). **Files that were already synced stay where they are.**
 
-### 需要更多设置？
+### Need more options?
 
-编辑任务时点「高级设置」，会在 FreeFileSync 里打开这个任务的全部选项（比如双向同步、按文件大小过滤）。在 FreeFileSync 里做的设置，SyncBar 之后保存时会原样保留。唯一的例外：如果在 SyncBar 里切换了「过滤」的两个开关，过滤规则会按 SyncBar 的设置重新生成。
+When editing a task, click “Advanced” to open all of its settings in FreeFileSync (for example two-way sync or size filters). Settings you make in FreeFileSync are kept when you later save the task in SyncBar. The one exception: toggling either of the two filter switches in SyncBar regenerates the filter rules from SyncBar's settings.
 
-## 常见问题
+## FAQ
 
-**Mac 睡眠或关机时，定时同步会怎样？**
-睡眠时错过的同步会在唤醒后补跑一次；关机时错过的不会补，等下一次定时再跑。另外需要处于登录状态（锁屏没关系）。
+**What happens to scheduled syncs while my Mac sleeps or is shut down?**
+A sync missed during sleep runs once when the Mac wakes. A sync missed while the Mac is shut down is not made up; it runs at the next scheduled time. You also need to be logged in (a locked screen is fine).
 
-**同步时屏幕上出现了一个窗口？**
-同步出错时，FreeFileSync 会显示结果窗口，方便你看到哪里出了问题，看完关掉即可。没有错误时它会在后台自动完成。
+**A window popped up during a sync?**
+When a sync fails, FreeFileSync shows its results window so you can see what went wrong; close it when you're done. Syncs without errors finish silently in the background.
 
-**移动硬盘没插会怎样？**
-这次同步会跳过，并弹出一条通知。下次插着的时候会正常同步。
+**What if the external drive isn't connected?**
+That sync is skipped and you get a notification. It syncs normally the next time the drive is connected.
 
-**提示「目标文件夹不存在」？**
-备份文件夹被删除或移动时，定时同步会重新创建它，并给出一条警告提醒你。如果是你自己删的，忽略即可；在 SyncBar 里点 ▶ 手动同步不会出现这条警告。
+**A warning says the destination folder doesn't exist?**
+If the backup folder was deleted or moved, a scheduled sync recreates it and warns you. If you deleted it yourself, you can ignore the warning. Syncing manually with ▶ in SyncBar doesn't produce this warning.
 
-**FreeFileSync 的界面需要打开吗？**
-不需要。SyncBar 在后台调用它，平时完全不用打开。
+**Do I need to open FreeFileSync?**
+No. SyncBar runs it in the background; you never need to open it.
 
-## 卸载
+## Uninstalling
 
-1. 在 SyncBar 里逐个删除同步任务（这样会同时移除后台定时设置）。
-2. 退出 SyncBar（面板底部「退出」），把它从「应用程序」拖到废纸篓。
+1. Delete your sync tasks in SyncBar one by one (this also removes their background schedules).
+2. Quit SyncBar (“Quit” at the bottom of the panel) and drag it from Applications to the Trash.
 
-如果已经先删除了 SyncBar，后台定时任务仍会继续运行。可以在终端里移除它们：
+If you already deleted SyncBar, its scheduled tasks keep running. Remove them in Terminal:
 
 ```bash
 for f in ~/Library/LaunchAgents/local.freefilesync.*.plist; do launchctl bootout gui/$(id -u) "$f"; mv "$f" ~/.Trash/; done
 ```
 
-## 工作原理
+## How it works
 
 ```
-SyncBar（界面）
- ├─ 任务文件   ~/FreeFileSync/<任务名>.ffs_batch          FreeFileSync 批处理任务
- ├─ 定时设置   ~/Library/LaunchAgents/local.freefilesync.*.plist   macOS launchd
- └─ 读取日志   ~/Library/Application Support/FreeFileSync/Logs
+SyncBar (interface)
+ ├─ Task files  ~/FreeFileSync/<task name>.ffs_batch                 FreeFileSync batch jobs
+ ├─ Schedules   ~/Library/LaunchAgents/local.freefilesync.*.plist    macOS launchd
+ └─ Reads logs  ~/Library/Application Support/FreeFileSync/Logs
 
-到时间后：launchd → 检查移动硬盘是否已连接 → 在后台启动 FreeFileSync 执行任务 → 写入日志 → SyncBar 显示结果
+When a task is due: launchd → checks the external drive is connected → starts FreeFileSync in the background → log written → SyncBar shows the result
 ```
 
-- 每个任务对应一个 FreeFileSync 批处理文件和一个 launchd 定时配置。SyncBar 只读写这两种文件，不自己复制任何文件。
-- 编辑任务时，SyncBar 只修改界面上能改的几项，任务文件里的其他设置原样保留（切换过滤开关时会重新生成过滤规则）。
-- 「完全磁盘访问权限」的检查方式：macOS 不允许查询其他 App 的权限，所以 SyncBar 让 FreeFileSync 试读一个受保护的系统文件夹（过滤规则保证不复制任何文件），以能否读取来判断。
+- Each task is one FreeFileSync batch file plus one launchd schedule. SyncBar only reads and writes these files; it never copies your files itself.
+- When you edit a task, SyncBar changes only the settings shown in its interface and keeps everything else in the batch file (toggling the filter switches regenerates the filter rules).
+- Checking Full Disk Access: macOS doesn't let one app query another's permissions, so SyncBar has FreeFileSync try to read a protected system folder (with a filter that guarantees nothing is copied) and judges by whether that works.
 
-## 开发
+## Development
 
-需要 Xcode 26 或更高版本。
+Requires Xcode 26 or later.
 
 ```bash
-open SyncBar.xcodeproj   # 然后按 ⌘R 运行
+open SyncBar.xcodeproj   # then press ⌘R
 ```
 
-运行前先退出已安装的 SyncBar，否则菜单栏会出现两个图标。
+Quit the installed SyncBar first, or you'll get two icons in the menu bar.
 
-| 文件 | 内容 |
+| File | Contents |
 |---|---|
-| `SyncBar/SyncBarApp.swift` | 入口、菜单栏图标、窗口 |
-| `SyncBar/MenuView.swift` | 菜单栏面板 |
-| `SyncBar/EditorView.swift` | 新建 / 编辑任务窗口 |
-| `SyncBar/SetupView.swift` | 首次启动引导 |
-| `SyncBar/SyncStore.swift` | 状态、立即同步、保存 / 删除任务 |
-| `SyncBar/SyncTask.swift` | 读取任务、日志 |
-| `SyncBar/TaskFiles.swift` | 读写 FreeFileSync 批处理文件和 launchd 配置 |
-| `SyncBar/Setup.swift` | 检测 FreeFileSync 和权限 |
+| `SyncBar/SyncBarApp.swift` | Entry point, menu bar icon, windows |
+| `SyncBar/MenuView.swift` | Menu bar panel |
+| `SyncBar/EditorView.swift` | New / edit task window |
+| `SyncBar/SetupView.swift` | First-run setup |
+| `SyncBar/SyncStore.swift` | State, Sync Now, saving and deleting tasks |
+| `SyncBar/SyncTask.swift` | Reading tasks and logs |
+| `SyncBar/TaskFiles.swift` | Reading and writing FreeFileSync batch files and launchd schedules |
+| `SyncBar/Setup.swift` | Detecting FreeFileSync and its permission |
 
-### 调试
+### Debugging
 
-不用点开菜单栏也能检查界面，把界面渲染成图片：
+You can check the interface without opening the menu bar by rendering it to an image:
 
 ```bash
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png                 # 菜单栏面板
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png new             # 新建任务窗口
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png <任务 label>    # 编辑某个任务
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # 引导页（Debug 版：setup / setup-missing / setup-denied）
+SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png                 # menu bar panel
+SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png new             # new task window
+SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png <task label>    # editing a task
+SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # setup window (Debug builds: setup / setup-missing / setup-denied)
 ```
 
-设置环境变量 `SYNCBAR_LOGS=<文件夹>` 可以让 SyncBar 读取另一个日志文件夹，用假日志预览出错、警告等状态。
+Set the environment variable `SYNCBAR_LOGS=<folder>` to make SyncBar read a different log folder, for previewing failed, warning and other states with fake logs.
 
-### 本地化
+### Localization
 
-界面文字的基准语言是简体中文，英文翻译在 `SyncBar/Localizable.xcstrings`（String Catalog）里，Xcode 编译时会自动提取代码里新增的文字。检查是否还有没翻译的：
+The interface's source language is Simplified Chinese; the English translation lives in `SyncBar/Localizable.xcstrings` (a String Catalog), and Xcode extracts new strings from the code when building. To check for untranslated strings:
 
 ```bash
 xcodebuild -exportLocalizations -project SyncBar.xcodeproj -localizationPath /tmp/loc -exportLanguage en
 ```
 
-用指定语言渲染界面：`SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`。
+To render the interface in a given language: `SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`.
 
-SyncBar 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync 会用它自己的界面语言写日志），而是看日志里结果图标的文件名、数字和错误码，所以无论 FreeFileSync 设置成什么语言都能正确判断。
+SyncBar doesn't rely on the wording of FreeFileSync's logs (FreeFileSync writes them in its own interface language). It reads the result icons' file names, the numbers and the error codes instead, so it works whatever language FreeFileSync is set to.
 
-### 图标
+### Icon
 
-App 图标由 `scripts/make-icon.swift` 用代码绘制（没有使用 SF Symbols，它的许可不允许用于 App 图标）。修改后重新生成：
+The app icon is drawn in code by `scripts/make-icon.swift` (it doesn't use SF Symbols, whose license excludes app icons). To regenerate it after changes:
 
 ```bash
 for pt in 16 32 128 256 512; do
@@ -163,28 +165,28 @@ for pt in 16 32 128 256 512; do
 done
 ```
 
-### 发布
+### Releasing
 
-`scripts/release.sh` 一条命令完成：归档 → Developer ID 签名 → 公证并附上公证结果 → 制作 DMG → DMG 签名、公证 → Gatekeeper 验证。产物在 `build/release/SyncBar-<版本>.dmg`。
+`scripts/release.sh` does everything in one command: archive → Developer ID signing → notarize and staple the app → build the DMG → sign and notarize the DMG → Gatekeeper check. The result is `build/release/SyncBar-<version>.dmg`.
 
-第一次使用前，需要把公证凭证存进钥匙串（需要 Apple ID 的 App 专用密码）：
+Before the first run, store the notarization credentials in the keychain (this needs an app-specific password for your Apple ID):
 
 ```bash
 xcrun notarytool store-credentials SyncBar-notary --apple-id <Apple ID> --team-id 3TJQ367JDZ
 ```
 
-发布新版本：在 Xcode 里修改 `MARKETING_VERSION`，然后运行：
+To release a new version, change `MARKETING_VERSION` in Xcode, then run:
 
 ```bash
 scripts/release.sh
 ```
 
-只想检查签名和打包、不提交公证时，加 `--skip-notarize`。
+Add `--skip-notarize` to check signing and packaging without submitting for notarization.
 
-## 许可
+## License
 
-SyncBar 以 [GNU 通用公共许可证 v3.0（GPL-3.0）](LICENSE) 发布，与 FreeFileSync 相同。你可以自由使用、修改和再分发 SyncBar；分发修改后的版本时，需要同样以 GPL-3.0 公开源代码。
+SyncBar is released under the [GNU General Public License v3.0 (GPL-3.0)](LICENSE), the same license as FreeFileSync. You're free to use, modify and redistribute SyncBar; if you distribute a modified version, you must also release its source code under GPL-3.0.
 
 Copyright © 2026 Yuting Bai
 
-SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。
+SyncBar contains no FreeFileSync code. It only runs the copy of FreeFileSync the user installed, and doesn't bundle or distribute it.
