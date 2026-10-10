@@ -65,7 +65,14 @@ final class SyncStore {
             }
             guard let details = logDetails[log.url] else { continue }
             latest[name]?.summary = LogReader.summary(details)
-            if let result = details.result { latest[name]?.result = result }
+            if var result = details.result {
+                // The `.git` pair's expected overlap with the main pair isn't worth flagging.
+                if result == .warning, let task = tasks.first(where: { $0.name == name }),
+                   task.excludeHidden && task.includeGit, details.onlyFolderPairOverlaps(under: task.targetPath) {
+                    result = .success
+                }
+                latest[name]?.result = result
+            }
         }
         logs = latest
         freeFileSyncInstalled = FreeFileSync.appURL != nil

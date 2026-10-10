@@ -169,8 +169,27 @@ enum LogReader {
         var processedSize: String?
         /// Messages next to an error icon in the log's message list.
         var errors: [String]
+        /// Messages next to a warning icon, one line per `<br>`.
+        var warnings: [String] = []
 
         var permissionDenied: Bool { errors.contains { $0.contains("EPERM") } }
+
+        /// Whether every warning is FreeFileSync's "files synced as part of multiple folder pairs",
+        /// listing only paths under `target`. A task that keeps `.git` uses a second pair with the same
+        /// folders, so both pairs create each new project folder and FreeFileSync warns about it. Batch
+        /// jobs can't turn that check off, so it's recognised here instead: the warning lists every
+        /// written path as "<base folder> 💾 <relative path>", and the 💾 mark is the same in every language.
+        func onlyFolderPairOverlaps(under target: String) -> Bool {
+            !warnings.isEmpty && warnings.allSatisfy { message in
+                let lines = message.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespaces) }
+                // 👓 marks a pair that only reads the path; that's a different kind of dependency.
+                guard !lines.contains(where: { $0.contains(" 👓 ") }) else { return false }
+                let written = lines.filter { $0.contains(" 💾 ") }
+                return !written.isEmpty && written.allSatisfy {
+                    $0.components(separatedBy: " 💾 ").first?.trimmingCharacters(in: .whitespaces) == target
+                }
+            }
+        }
     }
 
     /// Reads the first 16 KB of a log, where the summary and the errors and warnings sit
@@ -205,6 +224,10 @@ enum LogReader {
         for row in html.matches(of: /images\/log\/msg-error\.png" width="16"[^>]*><\/td>\s*<td>(.*?)<\/td>/.dotMatchesNewlines()) {
             let message = plainText(String(row.1))
             if !details.errors.contains(message) { details.errors.append(message) }
+        }
+        for row in html.matches(of: /images\/log\/msg-warning\.png" width="16"[^>]*><\/td>\s*<td>(.*?)<\/td>/.dotMatchesNewlines()) {
+            let message = plainText(String(row.1).replacing(/<br\s*\/?>/, with: "\n"))
+            if !details.warnings.contains(message) { details.warnings.append(message) }
         }
         return details
     }
