@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct SyncBarApp: App {
+struct SyncDockApp: App {
     static let editorID = "editor"
     static let setupID = "setup"
 
@@ -16,7 +16,7 @@ struct SyncBarApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        Window("设置 SyncBar", id: Self.setupID) {
+        Window("设置 SyncDock", id: Self.setupID) {
             SetupView(store: store)
         }
         .windowResizability(.contentSize)
@@ -44,7 +44,7 @@ private struct MenuBarLabel: View {
             .task {
                 await store.checkSetup()
                 if !store.setupComplete {
-                    openWindow(id: SyncBarApp.setupID)
+                    openWindow(id: SyncDockApp.setupID)
                     NSApp.activate()
                 }
             }
@@ -53,7 +53,7 @@ private struct MenuBarLabel: View {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // `SyncBar --snapshot out.png [task-label|new|setup|setup-missing|setup-denied]` renders the
+        // `SyncDock --snapshot out.png [task-label|new|setup|setup-missing|setup-denied]` renders the
         // panel, the editor or the setup window to a file and quits; used for checking the layout.
         let args = CommandLine.arguments
         if let i = args.firstIndex(of: "--snapshot"), i + 1 < args.count {

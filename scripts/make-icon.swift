@@ -1,4 +1,4 @@
-// Draws SyncBar's app icon: an external drive with a checkmark badge, matching the menu bar symbol.
+// Draws SyncDock's app icon: an external drive with a checkmark badge, matching the menu bar symbol.
 // Usage: swift scripts/make-icon.swift <output.png> [size]
 import AppKit
 

@@ -12,8 +12,8 @@ struct SetupView: View {
                     .font(.system(size: 34))
                     .foregroundStyle(Color.accentColor)
                 VStack(alignment: .leading, spacing: 3) {
-                    Text("欢迎使用 SyncBar").font(.title2.bold())
-                    Text("SyncBar 借助 FreeFileSync 在后台同步文件。开始之前，先完成下面两步。")
+                    Text("欢迎使用 SyncDock").font(.title2.bold())
+                    Text("SyncDock 借助 FreeFileSync 在后台同步文件。开始之前，先完成下面两步。")
                         .foregroundStyle(.secondary)
                 }
             }
@@ -32,9 +32,9 @@ struct SetupView: View {
 
             HStack {
                 Spacer()
-                Button("稍后再说") { dismissWindow(id: SyncBarApp.setupID) }
+                Button("稍后再说") { dismissWindow(id: SyncDockApp.setupID) }
                     .keyboardShortcut(.cancelAction)
-                Button("开始使用") { dismissWindow(id: SyncBarApp.setupID) }
+                Button("开始使用") { dismissWindow(id: SyncDockApp.setupID) }
                     .keyboardShortcut(.defaultAction)
                     .disabled(!store.setupComplete)
             }
@@ -42,7 +42,7 @@ struct SetupView: View {
         }
         .frame(width: 520)
         .fixedSize(horizontal: false, vertical: true)
-        .navigationTitle("设置 SyncBar")
+        .navigationTitle("设置 SyncDock")
         // Coming back from System Settings or a download: check again without making the user click.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             Task { await store.checkSetup() }
@@ -62,7 +62,7 @@ struct SetupView: View {
                 }
                 .foregroundStyle(.secondary)
             } else {
-                Text("FreeFileSync 是免费开源的同步工具，SyncBar 用它来执行同步。下载后打开安装包，按提示安装即可。")
+                Text("FreeFileSync 是免费开源的同步工具，SyncDock 用它来执行同步。下载后打开安装包，按提示安装即可。")
                     .foregroundStyle(.secondary)
                 HStack {
                     Button("下载 FreeFileSync") { NSWorkspace.shared.open(FreeFileSync.downloadURL) }
@@ -119,7 +119,7 @@ struct SetupView: View {
     }
 
     private var loginStep: some View {
-        Step(number: 3, title: "登录时自动启动 SyncBar（推荐）", state: store.launchAtLogin ? .done : .optional) {
+        Step(number: 3, title: "登录时自动启动 SyncDock（推荐）", state: store.launchAtLogin ? .done : .optional) {
             Toggle("开机登录后在菜单栏显示同步状态", isOn: Binding(get: { store.launchAtLogin },
                                                       set: { store.setLaunchAtLogin($0) }))
                 .toggleStyle(.checkbox)

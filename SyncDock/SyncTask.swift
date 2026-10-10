@@ -60,14 +60,14 @@ struct SyncLog: Equatable {
 
 enum Paths {
     static let home = FileManager.default.homeDirectoryForCurrentUser
-    /// `SYNCBAR_AGENTS` overrides where tasks are read from, for screenshots with demo tasks.
-    static let launchAgents = ProcessInfo.processInfo.environment["SYNCBAR_AGENTS"].map { URL(filePath: $0) }
+    /// `SYNCDOCK_AGENTS` overrides where tasks are read from, for screenshots with demo tasks.
+    static let launchAgents = ProcessInfo.processInfo.environment["SYNCDOCK_AGENTS"].map { URL(filePath: $0) }
         ?? home.appending(path: "Library/LaunchAgents")
-    /// `SYNCBAR_LOGS` overrides the log folder, for previewing states without touching real logs.
-    static let logs = ProcessInfo.processInfo.environment["SYNCBAR_LOGS"].map { URL(filePath: $0) }
+    /// `SYNCDOCK_LOGS` overrides the log folder, for previewing states without touching real logs.
+    static let logs = ProcessInfo.processInfo.environment["SYNCDOCK_LOGS"].map { URL(filePath: $0) }
         ?? home.appending(path: "Library/Application Support/FreeFileSync/Logs")
     static let labelPrefix = "local.freefilesync."
-    /// Where SyncBar keeps the batch jobs it creates.
+    /// Where SyncDock keeps the batch jobs it creates.
     static let jobs = home.appending(path: "FreeFileSync")
 }
 

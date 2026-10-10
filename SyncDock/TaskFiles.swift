@@ -129,7 +129,7 @@ struct TaskDraft: Equatable {
     }
 }
 
-/// A FreeFileSync `.ffs_batch` file, edited in place so settings SyncBar doesn't know about survive.
+/// A FreeFileSync `.ffs_batch` file, edited in place so settings SyncDock doesn't know about survive.
 struct BatchFile {
     let doc: XMLDocument
 
@@ -257,7 +257,7 @@ struct BatchFile {
         draft.createSubfolder = false
         draft.excludeHidden = false
         batch.apply(draft, isNew: true)
-        batch.element("/FreeFileSync/Filter/Include")?.setChildren([XMLElement(name: "Item", stringValue: "*/__syncbar_probe__")])
+        batch.element("/FreeFileSync/Filter/Include")?.setChildren([XMLElement(name: "Item", stringValue: "*/__syncdock_probe__")])
         batch.element("/FreeFileSync/LogFolder")?.stringValue = logFolder
         batch.element("/FreeFileSync/Errors")?.attribute(forName: "Retry")?.stringValue = "0"
         batch.element("/FreeFileSync/Batch/ErrorDialog")?.stringValue = "Cancel"
@@ -311,7 +311,7 @@ struct BatchFile {
 
 /// The launch agent that runs a batch job, skipping with a notification when its drive is unplugged.
 enum LaunchAgent {
-    /// Written into each launch agent, so the notification is in the language SyncBar had when saving.
+    /// Written into each launch agent, so the notification is in the language SyncDock had when saving.
     static var script: String {
         let message = String(localized: "移动硬盘未连接，本次同步已跳过")
             .replacing("\"", with: "").replacing("\\", with: "")

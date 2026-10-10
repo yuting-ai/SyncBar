@@ -7,12 +7,12 @@ set -euo pipefail
 
 ROOT=${0:A:h:h}
 OUT=$ROOT/docs/images
-DEMO=$(mktemp -d -t syncbar-demo)
+DEMO=$(mktemp -d -t syncdock-demo)
 trap 'rm -rf "$DEMO"' EXIT
 
-xcodebuild -project "$ROOT/SyncBar.xcodeproj" -scheme SyncBar -configuration Debug \
+xcodebuild -project "$ROOT/SyncDock.xcodeproj" -scheme SyncDock -configuration Debug \
     -derivedDataPath "$ROOT/build/DerivedData" build -quiet
-APP=$ROOT/build/DerivedData/Build/Products/Debug/SyncBar.app/Contents/MacOS/SyncBar
+APP=$ROOT/build/DerivedData/Build/Products/Debug/SyncDock.app/Contents/MacOS/SyncDock
 
 # Demo tasks: launch agents, batch jobs and logs in $DEMO/<lang>.
 /usr/bin/python3 -I - "$DEMO" "$HOME" <<'PY'
@@ -64,9 +64,11 @@ for lang, names in tasks.items():
 PY
 
 mkdir -p "$OUT"
+# 「完全磁盘访问权限已确认」用启动参数传入（只对这次运行生效），截图不依赖运行者自己的设置
 render() { # lang appleLanguage name view
-    SYNCBAR_AGENTS=$DEMO/$1/agents SYNCBAR_LOGS=$DEMO/$1/logs \
-        "$APP" --snapshot "$DEMO/$3-$1.png" ${4:+"$4"} -AppleLanguages "($2)"
+    SYNCDOCK_AGENTS=$DEMO/$1/agents SYNCDOCK_LOGS=$DEMO/$1/logs \
+        "$APP" --snapshot "$DEMO/$3-$1.png" ${4:+"$4"} -AppleLanguages "($2)" \
+        -fullDiskAccessVerifiedAt '<date>2026-01-01T00:00:00Z</date>'
 }
 for lang apple in en en zh zh-Hans; do
     render $lang $apple panel

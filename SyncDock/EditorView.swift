@@ -77,7 +77,7 @@ struct EditorView: View {
         .confirmationDialog("删除任务「\(draft.name)」？", isPresented: $confirmingDelete) {
             Button("删除任务", role: .destructive) {
                 if let existingTask { store.delete(existingTask) }
-                dismissWindow(id: SyncBarApp.editorID)
+                dismissWindow(id: SyncDockApp.editorID)
             }
         } message: {
             Text("只删除这个同步任务和它的定时设置（会移到废纸篓），已经同步过去的文件不受影响。")
@@ -148,7 +148,7 @@ struct EditorView: View {
                     .foregroundStyle(saveError == nil ? Color.secondary : .red)
                     .lineLimit(2)
             }
-            Button("取消") { dismissWindow(id: SyncBarApp.editorID) }
+            Button("取消") { dismissWindow(id: SyncDockApp.editorID) }
                 .keyboardShortcut(.cancelAction)
             Button("保存并同步") { save(runAfter: true) }
                 .disabled(store.validationError() != nil || draft.requiresVolumeMissing)
@@ -163,7 +163,7 @@ struct EditorView: View {
             let label = try store.saveDraft()
             saveError = nil
             if runAfter { store.runNow(label: label) }
-            dismissWindow(id: SyncBarApp.editorID)
+            dismissWindow(id: SyncDockApp.editorID)
         } catch {
             saveError = String(localized: "保存失败：\(error.localizedDescription)")
         }

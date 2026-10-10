@@ -1,24 +1,24 @@
 #!/bin/zsh
-# Builds a Developer ID–signed, notarized and stapled SyncBar DMG.
+# Builds a Developer ID–signed, notarized and stapled SyncDock DMG.
 #
 #   scripts/release.sh                 # full release: sign, notarize, staple, DMG
 #   scripts/release.sh --skip-notarize # sign and package only (for a quick local check)
 #
 # Notarization uses a notarytool keychain profile, created once with:
-#   xcrun notarytool store-credentials SyncBar-notary --apple-id <apple id> --team-id 3TJQ367JDZ
+#   xcrun notarytool store-credentials SyncDock-notary --apple-id <apple id> --team-id 3TJQ367JDZ
 # Override the profile name with NOTARY_PROFILE=...
 set -euo pipefail
 
 TEAM_ID=3TJQ367JDZ
-PROFILE=${NOTARY_PROFILE:-SyncBar-notary}
+PROFILE=${NOTARY_PROFILE:-SyncDock-notary}
 SKIP_NOTARIZE=false
 [[ "${1:-}" == "--skip-notarize" ]] && SKIP_NOTARIZE=true
 
 ROOT=${0:A:h:h}
 OUT=$ROOT/build/release
-ARCHIVE=$OUT/SyncBar.xcarchive
+ARCHIVE=$OUT/SyncDock.xcarchive
 EXPORT=$OUT/export
-APP=$EXPORT/SyncBar.app
+APP=$EXPORT/SyncDock.app
 
 step() { print -P "\n%F{blue}==>%f %B$1%b" }
 fail() { print -P "%F{red}error:%f $1" >&2; exit 1 }
@@ -46,11 +46,11 @@ security find-identity -v -p codesigning | grep -q "Developer ID Application: .*
     || fail "no 'Developer ID Application' certificate for team $TEAM_ID in the keychain"
 
 rm -rf "$OUT" && mkdir -p "$OUT"
-# Keep Spotlight from listing build copies of SyncBar next to the installed one.
+# Keep Spotlight from listing build copies of SyncDock next to the installed one.
 touch "$ROOT/build/.metadata_never_index"
 
 step "Archiving"
-xcodebuild -project "$ROOT/SyncBar.xcodeproj" -scheme SyncBar -configuration Release \
+xcodebuild -project "$ROOT/SyncDock.xcodeproj" -scheme SyncDock -configuration Release \
     -destination "generic/platform=macOS" -archivePath "$ARCHIVE" -derivedDataPath "$ROOT/build/DerivedData" \
     archive -quiet
 
@@ -71,25 +71,25 @@ xcodebuild -exportArchive -archivePath "$ARCHIVE" -exportPath "$EXPORT" \
     -exportOptionsPlist "$OUT/ExportOptions.plist" -quiet
 
 VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "$APP/Contents/Info.plist")
-DMG=$OUT/SyncBar-$VERSION.dmg
+DMG=$OUT/SyncDock-$VERSION.dmg
 
-step "Checking signature of SyncBar $VERSION"
+step "Checking signature of SyncDock $VERSION"
 codesign --verify --deep --strict "$APP"
 codesign -dvv "$APP" 2>&1 | grep -E "^(Authority=Developer ID Application|TeamIdentifier|Runtime Version|Timestamp)"
 
 if ! $SKIP_NOTARIZE; then
     step "Notarizing the app"
-    ditto -c -k --keepParent "$APP" "$OUT/SyncBar.zip"
-    notarize "$OUT/SyncBar.zip"
+    ditto -c -k --keepParent "$APP" "$OUT/SyncDock.zip"
+    notarize "$OUT/SyncDock.zip"
     xcrun stapler staple -q "$APP"
 fi
 
 step "Building $DMG:t"
 STAGE=$OUT/dmg
 mkdir -p "$STAGE"
-ditto "$APP" "$STAGE/SyncBar.app"
+ditto "$APP" "$STAGE/SyncDock.app"
 ln -s /Applications "$STAGE/Applications"
-hdiutil create -quiet -volname "SyncBar $VERSION" -srcfolder "$STAGE" -fs HFS+ -format UDZO -ov "$DMG"
+hdiutil create -quiet -volname "SyncDock $VERSION" -srcfolder "$STAGE" -fs HFS+ -format UDZO -ov "$DMG"
 codesign --sign "Developer ID Application: yuting bai ($TEAM_ID)" --timestamp "$DMG"
 
 if ! $SKIP_NOTARIZE; then
@@ -104,7 +104,7 @@ if ! $SKIP_NOTARIZE; then
 fi
 
 # Only the DMG (and notarization records) are worth keeping; extra app copies confuse Spotlight and Launch Services.
-rm -rf "$STAGE" "$EXPORT" "$ARCHIVE" "$OUT/SyncBar.zip"
+rm -rf "$STAGE" "$EXPORT" "$ARCHIVE" "$OUT/SyncDock.zip"
 
 step "Done"
 print "$DMG ($(du -h "$DMG" | cut -f1))"

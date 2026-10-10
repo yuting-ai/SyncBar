@@ -1,16 +1,16 @@
-# SyncBar — 简单好用的 Mac 文件夹自动同步
+# SyncDock — 简单好用的 Mac 文件夹自动同步
 
 **把重要的文件夹自动同步到移动硬盘或云盘。设好一次，之后不用再管。**
 
-SyncBar 住在 Mac 的菜单栏里。选好要备份的文件夹和备份到哪里，再设个时间，它就会每天（或每周）在后台自动同步，不用开着任何软件。
+SyncDock 住在 Mac 的菜单栏里。选好要备份的文件夹和备份到哪里，再设个时间，它就会每天（或每周）在后台自动同步，不用开着任何软件。
 
-[⬇ 下载 SyncBar 1.0（740 KB）](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)
+[⬇ 下载 SyncDock 1.0（740 KB）](https://github.com/yuting-ai/SyncDock/releases/latest/download/SyncDock.dmg)
 
 macOS 15 或更高版本 · Apple 芯片和 Intel Mac 均可 · 中文 / English · 免费
 
 ---
 
-## 为什么用 SyncBar
+## 为什么用 SyncDock
 
 - **一眼看清备份状态**：菜单栏图标绿色就是一切正常。备份出错，或者好几天没备份，图标会变色提醒你。
 - **几次点击就能设好**：选文件夹、选同步方式、选时间，没有复杂的选项。
@@ -21,36 +21,36 @@ macOS 15 或更高版本 · Apple 芯片和 Intel Mac 均可 · 中文 / English
 
 ## 安装只需三步
 
-1. **下载并安装**：打开下载的 DMG，把 SyncBar 拖进「应用程序」文件夹。
-2. **打开 SyncBar**：它会出现在屏幕右上角的菜单栏里，并弹出设置引导。
+1. **下载并安装**：打开下载的 DMG，把 SyncDock 拖进「应用程序」文件夹。
+2. **打开 SyncDock**：它会出现在屏幕右上角的菜单栏里，并弹出设置引导。
 3. **按引导完成设置**：
-   - 安装免费的 [FreeFileSync](https://freefilesync.org/download.php)（SyncBar 用它执行同步）
+   - 安装免费的 [FreeFileSync](https://freefilesync.org/download.php)（SyncDock 用它执行同步）
    - 在系统设置里允许 FreeFileSync 访问所有文件
 
 完成后，点菜单栏图标里的 ＋ 新建第一个同步任务。
 
 ## 常见问题
 
-**SyncBar 安全吗？**
-SyncBar 经过 Apple 公证，打开时不会被系统拦截，源代码也完全公开。默认的「更新」模式只会往备份里添加和更新文件，从不删除。
+**SyncDock 安全吗？**
+SyncDock 经过 Apple 公证，打开时不会被系统拦截，源代码也完全公开。默认的「更新」模式只会往备份里添加和更新文件，从不删除。
 
 **为什么还要装 FreeFileSync？**
-FreeFileSync 是一款成熟的免费开源同步软件，已经发展了十多年。SyncBar 把它的同步能力包装成更简单的界面，并负责定时运行。安装后不需要打开它。
+FreeFileSync 是一款成熟的免费开源同步软件，已经发展了十多年。SyncDock 把它的同步能力包装成更简单的界面，并负责定时运行。安装后不需要打开它。
 
 **为什么要给 FreeFileSync「完全磁盘访问权限」？**
-定时同步在后台进行，没有人能点「允许」。提前授权，FreeFileSync 才能读取你的桌面、文稿和移动硬盘。SyncBar 本身不需要这个权限。
+定时同步在后台进行，没有人能点「允许」。提前授权，FreeFileSync 才能读取你的桌面、文稿和移动硬盘。SyncDock 本身不需要这个权限。
 
 **可以同步到 OneDrive、iCloud 等云盘吗？**
 可以。选择云盘在 Mac 上的文件夹作为目标即可，云盘客户端会负责上传。
 
 **支持双向同步吗？**
-SyncBar 的界面提供「更新」和「镜像」两种单向同步。需要双向同步时，可以在任务的「高级设置」里用 FreeFileSync 设置，SyncBar 会保留这些设置。
+SyncDock 的界面提供「更新」和「镜像」两种单向同步。需要双向同步时，可以在任务的「高级设置」里用 FreeFileSync 设置，SyncDock 会保留这些设置。
 
 **界面支持英文吗？**
-支持。SyncBar 有中文和英文界面，会自动跟随系统语言。
+支持。SyncDock 有中文和英文界面，会自动跟随系统语言。
 
 **怎么卸载？**
-先在 SyncBar 里删除所有同步任务，然后退出 SyncBar，把它拖到废纸篓即可。
+先在 SyncDock 里删除所有同步任务，然后退出 SyncDock，把它拖到废纸篓即可。
 
 ---
 
@@ -69,4 +69,4 @@ SyncBar 的界面提供「更新」和「镜像」两种单向同步。需要双
 
 ---
 
-<sub>SyncBar 是开源软件，以 MIT 许可发布，源代码见 [GitHub](https://github.com/yuting-ai/SyncBar)。SyncBar 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，以 GPL-3.0 许可发布。</sub>
+<sub>SyncDock 是开源软件，以 MIT 许可发布，源代码见 [GitHub](https://github.com/yuting-ai/SyncDock)。SyncDock 是独立开发的工具，与 FreeFileSync 及其开发者无关。FreeFileSync 是 Zenju 的软件，以 GPL-3.0 许可发布。</sub>

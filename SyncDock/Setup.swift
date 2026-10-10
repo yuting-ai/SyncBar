@@ -21,7 +21,7 @@ enum FreeFileSync {
 /// macOS won't tell one app about another's privacy permissions, so this runs a throwaway batch job
 /// whose source is a folder only Full Disk Access can list. A filter matching nothing means no file
 /// is ever copied. FreeFileSync is started through Launch Services so it runs with its own
-/// permissions, not SyncBar's.
+/// permissions, not SyncDock's.
 enum PermissionProbe {
     enum Result { case granted, denied, unknown }
 
@@ -33,7 +33,7 @@ enum PermissionProbe {
 
     private static func runBlocking() -> Result {
         let fm = FileManager.default
-        let dir = fm.temporaryDirectory.appending(path: "syncbar-probe-\(UUID().uuidString)")
+        let dir = fm.temporaryDirectory.appending(path: "syncdock-probe-\(UUID().uuidString)")
         let logs = dir.appending(path: "logs")
         let target = dir.appending(path: "target")
         defer { try? fm.removeItem(at: dir) }

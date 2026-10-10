@@ -116,12 +116,12 @@
     "FreeFileSync": {
       "shouldTranslate": false
     },
-    "FreeFileSync 是免费开源的同步工具，SyncBar 用它来执行同步。下载后打开安装包，按提示安装即可。": {
+    "FreeFileSync 是免费开源的同步工具，SyncDock 用它来执行同步。下载后打开安装包，按提示安装即可。": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "FreeFileSync is a free, open-source sync tool that SyncBar uses to do the syncing. Download it, open the installer and follow the steps."
+            "value": "FreeFileSync is a free, open-source sync tool that SyncDock uses to do the syncing. Download it, open the installer and follow the steps."
           }
         }
       }
@@ -136,12 +136,12 @@
         }
       }
     },
-    "SyncBar 借助 FreeFileSync 在后台同步文件。开始之前，先完成下面两步。": {
+    "SyncDock 借助 FreeFileSync 在后台同步文件。开始之前，先完成下面两步。": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "SyncBar syncs your folders in the background using FreeFileSync. Before you start, complete the two steps below."
+            "value": "SyncDock syncs your folders in the background using FreeFileSync. Before you start, complete the two steps below."
           }
         }
       }
@@ -758,12 +758,12 @@
         }
       }
     },
-    "欢迎使用 SyncBar": {
+    "欢迎使用 SyncDock": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Welcome to SyncBar"
+            "value": "Welcome to SyncDock"
           }
         }
       }
@@ -858,12 +858,12 @@
         }
       }
     },
-    "登录时自动启动 SyncBar（推荐）": {
+    "登录时自动启动 SyncDock（推荐）": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open SyncBar at login (recommended)"
+            "value": "Open SyncDock at login (recommended)"
           }
         }
       }
@@ -988,12 +988,12 @@
         }
       }
     },
-    "设置 SyncBar": {
+    "设置 SyncDock": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set Up SyncBar"
+            "value": "Set Up SyncDock"
           }
         }
       }

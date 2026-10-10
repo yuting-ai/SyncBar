@@ -5,7 +5,7 @@ struct MenuView: View {
     @Environment(\.openWindow) private var openWindow
 
     private func openEditor() {
-        openWindow(id: SyncBarApp.editorID)
+        openWindow(id: SyncDockApp.editorID)
         NSApp.activate()
     }
 
@@ -92,7 +92,7 @@ struct MenuView: View {
             Text(setupProblem).font(.callout)
             Spacer()
             Button("去设置") {
-                openWindow(id: SyncBarApp.setupID)
+                openWindow(id: SyncDockApp.setupID)
                 NSApp.activate()
             }
             .controlSize(.small)

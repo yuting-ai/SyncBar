@@ -1,22 +1,22 @@
-# SyncBar
+# SyncDock
 
 **中文** | [English](README.md)
 
 一个 macOS 菜单栏小工具，用简单的界面管理文件夹同步：选好源文件夹和目标文件夹，设好什么时候同步，剩下的交给它在后台完成。
 
-同步本身由免费开源的 [FreeFileSync](https://freefilesync.org) 执行，SyncBar 负责它不擅长的部分：好用的界面、定时运行和状态一目了然。
+同步本身由免费开源的 [FreeFileSync](https://freefilesync.org) 执行，SyncDock 负责它不擅长的部分：好用的界面、定时运行和状态一目了然。
 
-<p align="center"><img src="docs/images/panel-zh.png" width="428" alt="SyncBar 菜单栏面板，列出三个同步任务"></p>
+<p align="center"><img src="docs/images/panel-zh.png" width="428" alt="SyncDock 菜单栏面板，列出三个同步任务"></p>
 
-> SyncBar 是独立开发的工具，不是 FreeFileSync 的官方产品。
+> SyncDock 是独立开发的工具，不是 FreeFileSync 的官方产品。
 
 ## 下载
 
-**[⬇ 下载 SyncBar（macOS）](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)**
+**[⬇ 下载 SyncDock（macOS）](https://github.com/yuting-ai/SyncDock/releases/latest/download/SyncDock.dmg)**
 
 macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公证 · 免费开源（MIT）
 
-所有版本和更新说明：[Releases](https://github.com/yuting-ai/SyncBar/releases)
+所有版本和更新说明：[Releases](https://github.com/yuting-ai/SyncDock/releases)
 
 ## 截图
 
@@ -52,17 +52,17 @@ macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公�
 
 ## 安装
 
-1. [下载 SyncBar.dmg](https://github.com/yuting-ai/SyncBar/releases/latest/download/SyncBar.dmg)，双击打开，把 SyncBar 拖进「应用程序」文件夹。
-2. 打开 SyncBar。它没有窗口，也不在程序坞里，只会出现在屏幕右上角的**菜单栏**。
-3. 第一次打开时会弹出「欢迎使用 SyncBar」，按提示完成两步：
-   1. **安装 FreeFileSync**：点「下载 FreeFileSync」，装好后回到 SyncBar，会自动识别。
-   2. **允许 FreeFileSync 访问所有文件**：点「打开系统设置」，在「完全磁盘访问权限」列表里点 ＋，选择 FreeFileSync 并打开开关。回到 SyncBar 后会自动检查。
+1. [下载 SyncDock.dmg](https://github.com/yuting-ai/SyncDock/releases/latest/download/SyncDock.dmg)，双击打开，把 SyncDock 拖进「应用程序」文件夹。
+2. 打开 SyncDock。它没有窗口，也不在程序坞里，只会出现在屏幕右上角的**菜单栏**。
+3. 第一次打开时会弹出「欢迎使用 SyncDock」，按提示完成两步：
+   1. **安装 FreeFileSync**：点「下载 FreeFileSync」，装好后回到 SyncDock，会自动识别。
+   2. **允许 FreeFileSync 访问所有文件**：点「打开系统设置」，在「完全磁盘访问权限」列表里点 ＋，选择 FreeFileSync 并打开开关。回到 SyncDock 后会自动检查。
 
-> **为什么需要「完全磁盘访问权限」？** 定时同步在后台运行，没有人能点「允许」。提前授权后，FreeFileSync 才能读取桌面、文稿和移动硬盘里的文件。这个权限是授予 FreeFileSync 的，SyncBar 自己不需要任何特殊权限。
+> **为什么需要「完全磁盘访问权限」？** 定时同步在后台运行，没有人能点「允许」。提前授权后，FreeFileSync 才能读取桌面、文稿和移动硬盘里的文件。这个权限是授予 FreeFileSync 的，SyncDock 自己不需要任何特殊权限。
 
 ## 使用
 
-点菜单栏里的 SyncBar 打开面板：
+点菜单栏里的 SyncDock 打开面板：
 
 | 操作 | 位置 |
 |---|---|
@@ -70,7 +70,7 @@ macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公�
 | 编辑或删除任务 | 任务右边的 ⚙ |
 | 立即同步一次 | 任务右边的 ▶ |
 | 查看某次同步的详细日志 | 点任务下面的「上次 …」那一行 |
-| 开机自动启动 SyncBar | 面板底部「登录时启动」 |
+| 开机自动启动 SyncDock | 面板底部「登录时启动」 |
 
 ### 删除任务会怎样？
 
@@ -78,7 +78,7 @@ macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公�
 
 ### 需要更多设置？
 
-编辑任务时点「高级设置」，会在 FreeFileSync 里打开这个任务的全部选项（比如双向同步、按文件大小过滤）。在 FreeFileSync 里做的设置，SyncBar 之后保存时会原样保留。唯一的例外：如果在 SyncBar 里切换了「过滤」的两个开关，过滤规则会按 SyncBar 的设置重新生成。
+编辑任务时点「高级设置」，会在 FreeFileSync 里打开这个任务的全部选项（比如双向同步、按文件大小过滤）。在 FreeFileSync 里做的设置，SyncDock 之后保存时会原样保留。唯一的例外：如果在 SyncDock 里切换了「过滤」的两个开关，过滤规则会按 SyncDock 的设置重新生成。
 
 ## 常见问题
 
@@ -92,17 +92,17 @@ macOS 15 或更高版本 · Apple 芯片和 Intel 均可 · 已通过 Apple 公�
 这次同步会跳过，并弹出一条通知。下次插着的时候会正常同步。
 
 **提示「目标文件夹不存在」？**
-备份文件夹被删除或移动时，定时同步会重新创建它，并给出一条警告提醒你。如果是你自己删的，忽略即可；在 SyncBar 里点 ▶ 手动同步不会出现这条警告。
+备份文件夹被删除或移动时，定时同步会重新创建它，并给出一条警告提醒你。如果是你自己删的，忽略即可；在 SyncDock 里点 ▶ 手动同步不会出现这条警告。
 
 **FreeFileSync 的界面需要打开吗？**
-不需要。SyncBar 在后台调用它，平时完全不用打开。
+不需要。SyncDock 在后台调用它，平时完全不用打开。
 
 ## 卸载
 
-1. 在 SyncBar 里逐个删除同步任务（这样会同时移除后台定时设置）。
-2. 退出 SyncBar（面板底部「退出」），把它从「应用程序」拖到废纸篓。
+1. 在 SyncDock 里逐个删除同步任务（这样会同时移除后台定时设置）。
+2. 退出 SyncDock（面板底部「退出」），把它从「应用程序」拖到废纸篓。
 
-如果已经先删除了 SyncBar，后台定时任务仍会继续运行。可以在终端里移除它们：
+如果已经先删除了 SyncDock，后台定时任务仍会继续运行。可以在终端里移除它们：
 
 ```bash
 for f in ~/Library/LaunchAgents/local.freefilesync.*.plist; do launchctl bootout gui/$(id -u) "$f"; mv "$f" ~/.Trash/; done
@@ -111,51 +111,51 @@ for f in ~/Library/LaunchAgents/local.freefilesync.*.plist; do launchctl bootout
 ## 工作原理
 
 ```
-SyncBar（界面）
+SyncDock（界面）
  ├─ 任务文件   ~/FreeFileSync/<任务名>.ffs_batch          FreeFileSync 批处理任务
  ├─ 定时设置   ~/Library/LaunchAgents/local.freefilesync.*.plist   macOS launchd
  └─ 读取日志   ~/Library/Application Support/FreeFileSync/Logs
 
-到时间后：launchd → 检查移动硬盘是否已连接 → 在后台启动 FreeFileSync 执行任务 → 写入日志 → SyncBar 显示结果
+到时间后：launchd → 检查移动硬盘是否已连接 → 在后台启动 FreeFileSync 执行任务 → 写入日志 → SyncDock 显示结果
 ```
 
-- 每个任务对应一个 FreeFileSync 批处理文件和一个 launchd 定时配置。SyncBar 只读写这两种文件，不自己复制任何文件。
-- 编辑任务时，SyncBar 只修改界面上能改的几项，任务文件里的其他设置原样保留（切换过滤开关时会重新生成过滤规则）。
-- 「完全磁盘访问权限」的检查方式：macOS 不允许查询其他 App 的权限，所以 SyncBar 让 FreeFileSync 试读一个受保护的系统文件夹（过滤规则保证不复制任何文件），以能否读取来判断。
+- 每个任务对应一个 FreeFileSync 批处理文件和一个 launchd 定时配置。SyncDock 只读写这两种文件，不自己复制任何文件。
+- 编辑任务时，SyncDock 只修改界面上能改的几项，任务文件里的其他设置原样保留（切换过滤开关时会重新生成过滤规则）。
+- 「完全磁盘访问权限」的检查方式：macOS 不允许查询其他 App 的权限，所以 SyncDock 让 FreeFileSync 试读一个受保护的系统文件夹（过滤规则保证不复制任何文件），以能否读取来判断。
 
 ## 开发
 
 需要 Xcode 26 或更高版本。
 
 ```bash
-open SyncBar.xcodeproj   # 然后按 ⌘R 运行
+open SyncDock.xcodeproj   # 然后按 ⌘R 运行
 ```
 
-运行前先退出已安装的 SyncBar，否则菜单栏会出现两个图标。
+运行前先退出已安装的 SyncDock，否则菜单栏会出现两个图标。
 
 | 文件 | 内容 |
 |---|---|
-| `SyncBar/SyncBarApp.swift` | 入口、菜单栏图标、窗口 |
-| `SyncBar/MenuView.swift` | 菜单栏面板 |
-| `SyncBar/EditorView.swift` | 新建 / 编辑任务窗口 |
-| `SyncBar/SetupView.swift` | 首次启动引导 |
-| `SyncBar/SyncStore.swift` | 状态、立即同步、保存 / 删除任务 |
-| `SyncBar/SyncTask.swift` | 读取任务、日志 |
-| `SyncBar/TaskFiles.swift` | 读写 FreeFileSync 批处理文件和 launchd 配置 |
-| `SyncBar/Setup.swift` | 检测 FreeFileSync 和权限 |
+| `SyncDock/SyncDockApp.swift` | 入口、菜单栏图标、窗口 |
+| `SyncDock/MenuView.swift` | 菜单栏面板 |
+| `SyncDock/EditorView.swift` | 新建 / 编辑任务窗口 |
+| `SyncDock/SetupView.swift` | 首次启动引导 |
+| `SyncDock/SyncStore.swift` | 状态、立即同步、保存 / 删除任务 |
+| `SyncDock/SyncTask.swift` | 读取任务、日志 |
+| `SyncDock/TaskFiles.swift` | 读写 FreeFileSync 批处理文件和 launchd 配置 |
+| `SyncDock/Setup.swift` | 检测 FreeFileSync 和权限 |
 
 ### 调试
 
 不用点开菜单栏也能检查界面，把界面渲染成图片：
 
 ```bash
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png                 # 菜单栏面板
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png new             # 新建任务窗口
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png <任务 label>    # 编辑某个任务
-SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png setup-missing   # 引导页（Debug 版：setup / setup-missing / setup-denied）
+SyncDock.app/Contents/MacOS/SyncDock --snapshot out.png                 # 菜单栏面板
+SyncDock.app/Contents/MacOS/SyncDock --snapshot out.png new             # 新建任务窗口
+SyncDock.app/Contents/MacOS/SyncDock --snapshot out.png <任务 label>    # 编辑某个任务
+SyncDock.app/Contents/MacOS/SyncDock --snapshot out.png setup-missing   # 引导页（Debug 版：setup / setup-missing / setup-denied）
 ```
 
-设置环境变量 `SYNCBAR_LOGS=<文件夹>` 可以让 SyncBar 读取另一个日志文件夹，用假日志预览出错、警告等状态。`SYNCBAR_AGENTS=<文件夹>` 同理，用来指定读取任务的定时配置文件夹。
+设置环境变量 `SYNCDOCK_LOGS=<文件夹>` 可以让 SyncDock 读取另一个日志文件夹，用假日志预览出错、警告等状态。`SYNCDOCK_AGENTS=<文件夹>` 同理，用来指定读取任务的定时配置文件夹。
 
 README 里的截图用演示任务渲染，不会出现真实的文件夹名。修改界面后，重新生成中英文截图：
 
@@ -165,24 +165,24 @@ scripts/make-screenshots.sh
 
 ### 本地化
 
-界面文字的基准语言是简体中文，英文翻译在 `SyncBar/Localizable.xcstrings`（String Catalog）里，Xcode 编译时会自动提取代码里新增的文字。检查是否还有没翻译的：
+界面文字的基准语言是简体中文，英文翻译在 `SyncDock/Localizable.xcstrings`（String Catalog）里，Xcode 编译时会自动提取代码里新增的文字。检查是否还有没翻译的：
 
 ```bash
-xcodebuild -exportLocalizations -project SyncBar.xcodeproj -localizationPath /tmp/loc -exportLanguage en
+xcodebuild -exportLocalizations -project SyncDock.xcodeproj -localizationPath /tmp/loc -exportLanguage en
 ```
 
-用指定语言渲染界面：`SyncBar.app/Contents/MacOS/SyncBar --snapshot out.png -AppleLanguages "(en)"`。
+用指定语言渲染界面：`SyncDock.app/Contents/MacOS/SyncDock --snapshot out.png -AppleLanguages "(en)"`。
 
-SyncBar 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync 会用它自己的界面语言写日志），而是看日志里结果图标的文件名、数字和错误码，所以无论 FreeFileSync 设置成什么语言都能正确判断。
+SyncDock 读取 FreeFileSync 日志时不依赖日志的文字（FreeFileSync 会用它自己的界面语言写日志），而是看日志里结果图标的文件名、数字和错误码，所以无论 FreeFileSync 设置成什么语言都能正确判断。
 
 ### 发布
 
-`scripts/release.sh` 一条命令完成：归档 → Developer ID 签名 → 公证并附上公证结果 → 制作 DMG → DMG 签名、公证 → Gatekeeper 验证。产物在 `build/release/SyncBar-<版本>.dmg`。
+`scripts/release.sh` 一条命令完成：归档 → Developer ID 签名 → 公证并附上公证结果 → 制作 DMG → DMG 签名、公证 → Gatekeeper 验证。产物在 `build/release/SyncDock-<版本>.dmg`。
 
 第一次使用前，需要把公证凭证存进钥匙串（需要 Apple ID 的 App 专用密码）：
 
 ```bash
-xcrun notarytool store-credentials SyncBar-notary --apple-id <Apple ID> --team-id 3TJQ367JDZ
+xcrun notarytool store-credentials SyncDock-notary --apple-id <Apple ID> --team-id 3TJQ367JDZ
 ```
 
 发布新版本：在 Xcode 里修改 `MARKETING_VERSION`，然后运行：
@@ -193,15 +193,15 @@ scripts/release.sh
 
 只想检查签名和打包、不提交公证时，加 `--skip-notarize`。
 
-发布到 GitHub。DMG 统一以 `SyncBar.dmg` 的文件名上传，这样 README 里的下载链接（`releases/latest/download/SyncBar.dmg`）始终指向最新版本：
+发布到 GitHub。DMG 统一以 `SyncDock.dmg` 的文件名上传，这样 README 里的下载链接（`releases/latest/download/SyncDock.dmg`）始终指向最新版本：
 
 ```bash
-cp build/release/SyncBar-1.1.dmg build/release/SyncBar.dmg
-gh release create v1.1 build/release/SyncBar.dmg --title "SyncBar 1.1" --notes "…"
+cp build/release/SyncDock-1.1.dmg build/release/SyncDock.dmg
+gh release create v1.1 build/release/SyncDock.dmg --title "SyncDock 1.1" --notes "…"
 ```
 
 ## 许可
 
-SyncBar 以 [MIT 许可证](LICENSE) 发布。
+SyncDock 以 [MIT 许可证](LICENSE) 发布。
 
-SyncBar 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。FreeFileSync 本身以 GPL-3.0 许可发布。
+SyncDock 不包含 FreeFileSync 的任何代码，只调用用户自行安装的 FreeFileSync，也不随安装包分发它。FreeFileSync 本身以 GPL-3.0 许可发布。

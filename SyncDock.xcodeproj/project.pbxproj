@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		5B0000000000000000000001 /* SyncBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SyncBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B0000000000000000000001 /* SyncDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SyncDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5B0000000000000000000002 /* SyncBar */ = {
+		5B0000000000000000000002 /* SyncDock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SyncBar;
+			path = SyncDock;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		5B0000000000000000000004 = {
 			isa = PBXGroup;
 			children = (
-				5B0000000000000000000002 /* SyncBar */,
+				5B0000000000000000000002 /* SyncDock */,
 				5B0000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		5B0000000000000000000005 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5B0000000000000000000001 /* SyncBar.app */,
+				5B0000000000000000000001 /* SyncDock.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5B0000000000000000000006 /* SyncBar */ = {
+		5B0000000000000000000006 /* SyncDock */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5B0000000000000000000007 /* Build configuration list for PBXNativeTarget "SyncBar" */;
+			buildConfigurationList = 5B0000000000000000000007 /* Build configuration list for PBXNativeTarget "SyncDock" */;
 			buildPhases = (
 				5B0000000000000000000008 /* Sources */,
 				5B0000000000000000000003 /* Frameworks */,
@@ -61,11 +61,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5B0000000000000000000002 /* SyncBar */,
+				5B0000000000000000000002 /* SyncDock */,
 			);
-			name = SyncBar;
-			productName = SyncBar;
-			productReference = 5B0000000000000000000001 /* SyncBar.app */;
+			name = SyncDock;
+			productName = SyncDock;
+			productReference = 5B0000000000000000000001 /* SyncDock.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -83,7 +83,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5B000000000000000000000B /* Build configuration list for PBXProject "SyncBar" */;
+			buildConfigurationList = 5B000000000000000000000B /* Build configuration list for PBXProject "SyncDock" */;
 			developmentRegion = "zh-Hans";
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -98,7 +98,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5B0000000000000000000006 /* SyncBar */,
+				5B0000000000000000000006 /* SyncDock */,
 			);
 		};
 /* End PBXProject section */
@@ -167,20 +167,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3TJQ367JDZ;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SyncBar;
+				INFOPLIST_KEY_CFBundleDisplayName = SyncDock;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = me.lepton.syncbar;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = me.lepton.syncdock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -193,20 +193,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3TJQ367JDZ;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SyncBar;
+				INFOPLIST_KEY_CFBundleDisplayName = SyncDock;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = me.lepton.syncbar;
+				MARKETING_VERSION = 1.0.2;
+				PRODUCT_BUNDLE_IDENTIFIER = me.lepton.syncdock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -216,7 +216,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5B0000000000000000000007 /* Build configuration list for PBXNativeTarget "SyncBar" */ = {
+		5B0000000000000000000007 /* Build configuration list for PBXNativeTarget "SyncDock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5B000000000000000000000E /* Debug */,
@@ -225,7 +225,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5B000000000000000000000B /* Build configuration list for PBXProject "SyncBar" */ = {
+		5B000000000000000000000B /* Build configuration list for PBXProject "SyncDock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5B000000000000000000000C /* Debug */,

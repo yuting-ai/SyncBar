@@ -21,7 +21,7 @@ final class SyncStore {
 
     private(set) var tasks: [SyncTask] = []
     private(set) var logs: [String: SyncLog] = [:]
-    /// Runs started from SyncBar (label → start time), cleared when their log appears.
+    /// Runs started from SyncDock (label → start time), cleared when their log appears.
     private(set) var pending: [String: Date] = [:]
     private(set) var now = Date.now
     private(set) var launchAtLogin = SMAppService.mainApp.status == .enabled
